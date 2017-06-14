@@ -1,0 +1,90 @@
+﻿@model MyFirstMVCEntityFrameProject.Models.PurchaseRequest
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PurchaseRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Justification)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Justification)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateNeeded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateNeeded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryMode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryMode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocsAttached)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocsAttached)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmittedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubmittedDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

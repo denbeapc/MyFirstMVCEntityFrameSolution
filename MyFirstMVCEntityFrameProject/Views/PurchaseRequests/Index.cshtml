@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MyFirstMVCEntityFrameProject.Models.PurchaseRequest>
+
+@{
+    ViewBag.Title = "Purchase Requests";
+}
+
+<h2>Purchase Requests</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Justification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateNeeded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryMode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocsAttached)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmittedDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Justification)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateNeeded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeliveryMode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocsAttached)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubmittedDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
