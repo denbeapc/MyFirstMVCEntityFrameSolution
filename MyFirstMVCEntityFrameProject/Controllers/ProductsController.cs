@@ -15,8 +15,7 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
 
         // GET: Products
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             var products = db.Products.Include(p => p.Vendor);
             return View(products.ToList());
         }
@@ -39,8 +38,11 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
-            ViewBag.VendorID = new SelectList(db.Vendors, "ID", "Code");
-            return View();
+            ProductEditView pev = new ProductEditView {
+                Vendors = db.Vendors.ToList()
+            };
+
+            return View(pev);
         }
 
         // POST: Products/Create
@@ -48,16 +50,25 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,VendorPartNumber,Price,Unit,Photopath,VendorID")] Product product)
+        public ActionResult Create([Bind(Include = "ID,Name,VendorPartNumber,Price,Unit,Photopath,VendorID")] ProductEditView pev)
         {
+            Product product = new Product {
+                ID = pev.ID,
+                VendorID = pev.VendorID,
+                Name = pev.Name,
+                VendorPartNumber = pev.VendorPartNumber,
+                Price = pev.Price,
+                Unit = pev.Unit,
+                Photopath = pev.Photopath
+            };
+
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.VendorID = new SelectList(db.Vendors, "ID", "Code", product.VendorID);
+            
             return View(product);
         }
 
@@ -73,8 +84,20 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.VendorID = new SelectList(db.Vendors, "ID", "Code", product.VendorID);
-            return View(product);
+
+            ProductEditView pev = new ProductEditView {
+                ID = product.ID,
+                Name = product.Name,
+                VendorPartNumber = product.VendorPartNumber,
+                Price = product.Price,
+                Unit = product.Unit,
+                Photopath = product.Photopath,
+                VendorID = product.VendorID,
+                Vendors = db.Vendors.ToList()
+            };
+            
+            // ViewBag.VendorID = new SelectList(db.Vendors, "ID", "Code", product.VendorID);
+            return View(pev);
         }
 
         // POST: Products/Edit/5
@@ -82,15 +105,25 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,VendorPartNumber,Price,Unit,Photopath,VendorID")] Product product)
+        public ActionResult Edit([Bind(Include = "ID,VendorID,Name,VendorPartNumber,Price,Unit,Photopath")] ProductEditView pev)
         {
+            Product product = new Product {
+                ID = pev.ID,
+                VendorID = pev.VendorID,
+                Name = pev.Name,
+                VendorPartNumber = pev.VendorPartNumber,
+                Price = pev.Price,
+                Unit = pev.Unit,
+                Photopath = pev.Photopath
+            };
+
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.VendorID = new SelectList(db.Vendors, "ID", "Code", product.VendorID);
+
             return View(product);
         }
 

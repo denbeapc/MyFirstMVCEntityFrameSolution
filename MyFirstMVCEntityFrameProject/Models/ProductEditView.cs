@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 
 namespace MyFirstMVCEntityFrameProject.Models {
-    public class Product {
+    public class ProductEditView {
         public int ID { get; set; }
         [Required]
         [MaxLength(150)]
@@ -23,6 +23,6 @@ namespace MyFirstMVCEntityFrameProject.Models {
         public string Photopath { get; set; }
 
         public int VendorID { get; set; }
-        public virtual Vendor Vendor { get; set; }
+        public List<Vendor> Vendors { get; set; }
     }
 }

@@ -14,6 +14,18 @@ namespace MyFirstMVCEntityFrameProject.Controllers
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
 
+        // -------------- IMPORTANT -------------- //
+        // RETURNS a list of the Users to the front end (JQuery) in Json formatting
+        public ActionResult List() {
+            return Json(db.Users.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // GETS a specific User by ID and returns it to the front end (JQuery) in Json formatting
+        public ActionResult Get(int? id) {
+            return Json(db.Users.Find(id), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Users
         public ActionResult Index()
         {
