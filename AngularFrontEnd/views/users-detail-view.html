@@ -1,0 +1,61 @@
+<div>
+	<div>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> Detail</span>
+	</div>
+	<div>
+		<table id="DetailTable" class="table">
+			<tbody>
+				<tr>
+					<td>
+						<span class="DetailHeading">Username </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedUser.UserName"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Name </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedUser.FirstName"></span>
+						<span ng-bind="ctrl.SelectedUser.LastName"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Phone </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedUser.Phone"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Email </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedUser.Email"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Is Reviewer? </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedUser.IsReviewer"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Is Admin? </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedUser.IsAdmin"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<span><a href="#/">Edit</a></span> | <span><a href="#/">Delete</a></span>
+	</div>
+</div>

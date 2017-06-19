@@ -7,12 +7,64 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyFirstMVCEntityFrameProject.Models;
+using Api = System.Web.Http;
 
 namespace MyFirstMVCEntityFrameProject.Controllers
 {
     public class VendorsController : Controller
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
+
+        // -------------- IMPORTANT -------------- //
+        // RETURNS a list of the Vendors to the front end (JQuery) in Json formatting
+        public ActionResult List() {
+            return Json(db.Vendors.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // GETS a specific Vendor by ID and returns it to the front end (JQuery) in Json formatting
+        public ActionResult Get(int? id) {
+            return Json(db.Vendors.Find(id), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // REMOVES a specific Vendor by ID
+        public ActionResult Remove(int? id) {
+            if (id == null || db.Vendors.Find(id) == null) {
+                return Json(new Msg { Result = "Failed", Message = "Vendor not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+            Vendor vendor = db.Vendors.Find(id);
+            db.Vendors.Remove(vendor);
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully deleted" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // CREATES a Vendor with a passed in Vendor object
+        public ActionResult Add([Api.FromBody] Vendor vendor) {
+            db.Vendors.Add(vendor);
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully added" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // UPDATES a Vendor with a passed in Vendor object
+        public ActionResult Change([Api.FromBody] Vendor aVendor) {
+            Vendor vendor = db.Vendors.Find(aVendor.ID);
+            vendor.Code = aVendor.Code;
+            vendor.Name = aVendor.Name;
+            vendor.Address = aVendor.Address;
+            vendor.City = aVendor.City;
+            vendor.State = aVendor.State;
+            vendor.Zip = aVendor.Zip;
+            vendor.Phone = aVendor.Phone;
+            vendor.Email = aVendor.Email;
+            vendor.IsRecommended = aVendor.IsRecommended;
+
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Vendors
         public ActionResult Index()

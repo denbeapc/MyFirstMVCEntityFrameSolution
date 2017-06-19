@@ -11,11 +11,6 @@ using Api = System.Web.Http;
 
 namespace MyFirstMVCEntityFrameProject.Controllers
 {
-    class Msg {
-        public string Result { get; set; }
-        public string Message { get; set; }
-    }
-
     public class UsersController : Controller
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();

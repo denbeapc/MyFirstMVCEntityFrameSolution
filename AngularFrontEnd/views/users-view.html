@@ -1,0 +1,53 @@
+<div>
+	<div>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Username</td>
+					<td>Name</td>
+					<td>Phone</td>
+					<td>Email</td>
+					<td>Is Reviewer?</td>
+					<td>Is Admin?</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Angular function ng-repeat executes for however many rows are in the array/object  -->
+				<!-- 
+					ctrl.Users allows the code to access the Users 
+					array/object established in the prs-controller class 
+				-->
+				<tr ng-repeat="user in ctrl.Users">
+					<td>
+						<span ng-bind="user.UserName"></span>
+					</td>
+					<td>
+						<span ng-bind="user.FirstName"></span>
+						<span ng-bind="user.LastName"></span>
+					</td>
+					<td>
+						<span ng-bind="user.Phone"></span>
+					</td>
+					<td>
+						<span ng-bind="user.Email"></span>
+					</td>
+					<td>
+						<span ng-bind="user.IsReviewer"></span>
+					</td>
+					<td>
+						<span ng-bind="user.IsAdmin"></span>
+					</td>
+					<td>
+						<span><a href="#/users/edit/{{user.ID}}">Edit</a></span> | 
+						<span><a href="#/users/detail/{{user.ID}}">Details</a></span> | 
+						<span><a href="#/users/remove/{{user.ID}}">Delete</a></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
