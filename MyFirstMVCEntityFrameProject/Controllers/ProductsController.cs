@@ -7,12 +7,62 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyFirstMVCEntityFrameProject.Models;
+using Api = System.Web.Http;
 
 namespace MyFirstMVCEntityFrameProject.Controllers
 {
     public class ProductsController : Controller
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
+
+        // -------------- IMPORTANT -------------- //
+        // RETURNS a list of the Product to the front end (JQuery) in Json formatting
+        public ActionResult List() {
+            return Json(db.Products.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // GETS a specific Product by ID and returns it to the front end (JQuery) in Json formatting
+        public ActionResult Get(int? id) {
+            return Json(db.Products.Find(id), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // REMOVES a specific Product by ID
+        public ActionResult Remove(int? id) {
+            if (id == null || db.Products.Find(id) == null) {
+                return Json(new Msg { Result = "Failed", Message = "Product not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+            Product product = db.Products.Find(id);
+            db.Products.Remove(product);
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully deleted" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // CREATES a Product with a passed in Product object
+        public ActionResult Add([Api.FromBody] Product product) {
+            db.Products.Add(product);
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully added" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // UPDATES a Product with a passed in Product object
+        public ActionResult Change([Api.FromBody] Product aProduct) {
+            Product product = db.Products.Find(aProduct.ID);
+            product.Vendor = aProduct.Vendor;
+            product.VendorID = aProduct.VendorID;
+            product.Name = aProduct.Name;
+            product.VendorPartNumber = aProduct.VendorPartNumber;
+            product.Price = aProduct.Price;
+            product.Unit = aProduct.Unit;
+            product.Photopath = aProduct.Photopath;
+
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Products
         public ActionResult Index() {

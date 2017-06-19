@@ -49,4 +49,21 @@ function UserCtrl($http, $routeParams) {
 				console.log("ERROR:", err);
 			}
 		);
+
+	// JQuery function that updates a specific user from the database given an ID
+	self.Update = function() {
+		$http.post("http://localhost:63409/Users/Change/" + self.SelectedUserID)
+			.then(
+				// if successful
+				function(resp) {
+					console.log("SUCCESS");
+					$location.path("/users");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
 }

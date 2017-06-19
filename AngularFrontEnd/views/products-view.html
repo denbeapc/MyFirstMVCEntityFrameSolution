@@ -1,0 +1,52 @@
+<div ng-controller="ProductCtrl as ctrl">
+	<div>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Vendor</td>
+					<td>Product</td>
+					<td>Part Number</td>
+					<td>Price</td>
+					<td>Unit</td>
+					<td>Photopath</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Angular function ng-repeat executes for however many rows are in the array/object  -->
+				<!-- 
+					ctrl.Products allows the code to access the Products 
+					array/object established in the prs-product-controller class 
+				-->
+				<tr ng-repeat="product in ctrl.Products">
+					<td>
+						<span ng-bind="product.Vendor.Name"></span>
+					</td>
+					<td>
+						<span ng-bind="product.Name"></span>
+					</td>
+					<td>
+						<span ng-bind="product.VendorPartNumber"></span>
+					</td>
+					<td>
+						<span ng-bind="product.Price"></span>
+					</td>
+					<td>
+						<span ng-bind="product.Unit"></span>
+					</td>
+					<td>
+						<span ng-bind="product.Photopath"></span>
+					</td>
+					<td>
+						<span><a href="#/products/edit/{{product.ID}}">Edit</a></span> | 
+						<span><a href="#/products/detail/{{product.ID}}">Details</a></span> | 
+						<span><a href="#/products/remove/{{product.ID}}">Delete</a></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

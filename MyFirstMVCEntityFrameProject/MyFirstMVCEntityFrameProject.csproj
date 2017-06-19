@@ -218,6 +218,7 @@
     <Compile Include="Models\PurchaseRequest.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />
+    <Compile Include="Msg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

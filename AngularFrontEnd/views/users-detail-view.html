@@ -1,6 +1,6 @@
-<div>
+<div ng-controller="UserCtrl as ctrl">
 	<div>
-		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> Detail</span>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> Details</span>
 	</div>
 	<div>
 		<table id="DetailTable" class="table">
@@ -56,6 +56,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<span><a href="#/">Edit</a></span> | <span><a href="#/">Delete</a></span>
+		<span><a href="#/users/edit/{{user.ID}}">Edit</a></span> | <span><a href="#/">Delete</a></span>
 	</div>
 </div>

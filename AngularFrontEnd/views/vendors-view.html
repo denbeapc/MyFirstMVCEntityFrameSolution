@@ -1,3 +1,55 @@
-<div>
-	<h1>Vendor List</h1>
+<div ng-controller="VendorCtrl as ctrl">
+	<div>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Code</td>
+					<td>Name</td>
+					<td>Address</td>
+					<td>Phone</td>
+					<td>Email</td>
+					<td>Is Recommended?</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Angular function ng-repeat executes for however many rows are in the array/object  -->
+				<!-- 
+					ctrl.Vendors allows the code to access the Vendors 
+					array/object established in the prs-vendor-controller class 
+				-->
+				<tr ng-repeat="vendor in ctrl.Vendors">
+					<td>
+						<span ng-bind="vendor.Code"></span>
+					</td>
+					<td>
+						<span ng-bind="vendor.Name"></span>
+					</td>
+					<td>
+						<span ng-bind="vendor.Address"></span>,
+						<span ng-bind="vendor.City"></span>,
+						<span ng-bind="vendor.State"></span>
+						<span ng-bind="vendor.Zip"></span>
+					</td>
+					<td>
+						<span ng-bind="vendor.Phone"></span>
+					</td>
+					<td>
+						<span ng-bind="vendor.Email"></span>
+					</td>
+					<td>
+						<span ng-bind="vendor.IsRecommended"></span>
+					</td>
+					<td>
+						<span><a href="#/vendors/edit/{{vendor.ID}}">Edit</a></span> | 
+						<span><a href="#/vendors/detail/{{vendor.ID}}">Details</a></span> | 
+						<span><a href="#/vendors/remove/{{vendor.ID}}">Delete</a></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

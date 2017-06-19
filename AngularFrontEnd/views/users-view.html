@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="UserCtrl as ctrl">
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
 	</div>
@@ -19,7 +19,7 @@
 				<!-- Angular function ng-repeat executes for however many rows are in the array/object  -->
 				<!-- 
 					ctrl.Users allows the code to access the Users 
-					array/object established in the prs-controller class 
+					array/object established in the prs-user-controller class 
 				-->
 				<tr ng-repeat="user in ctrl.Users">
 					<td>

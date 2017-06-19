@@ -11,7 +11,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
 	<script src="ng/prs-module.js" type="text/javascript"></script>
-	<script src="ng/prs-controller.js" type="text/javascript"></script>
+	<script src="ng/prs-user-controller.js" type="text/javascript"></script>
+	<script src="ng/prs-vendor-controller.js" type="text/javascript"></script>
+	<script src="ng/prs-product-controller.js" type="text/javascript"></script>
 	<script src="ng/prs-config.js" type="text/javascript"></script>
 
 	<!-- JS -->
@@ -20,7 +22,7 @@
 	<!-- CSS -->
 	<link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
-<body ng-controller="UserCtrl as ctrl">
+<body>
 	<div id="menu">
 		<nav class="nav navbar-inverse"> 
 			<div class="container">
@@ -37,9 +39,11 @@
 
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="#/">HOME</a></li>
-						<li><a href="#/users">USERS</a></li>
-						<li><a href="#/about">ABOUT</a></li>
+						<li><a href="#/">Home</a></li>
+						<li><a href="#/users">Users</a></li>
+						<li><a href="#/vendors">Vendors</a></li>
+						<li><a href="#/products">Products</a></li>
+						<li><a href="#/about">About</a></li>
 					</ul>
 				</div>
 			</div>
