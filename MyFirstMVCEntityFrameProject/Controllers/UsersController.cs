@@ -7,9 +7,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyFirstMVCEntityFrameProject.Models;
+using Api = System.Web.Http;
 
 namespace MyFirstMVCEntityFrameProject.Controllers
 {
+    class Msg {
+        public string Result { get; set; }
+        public string Message { get; set; }
+    }
+
     public class UsersController : Controller
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
@@ -24,6 +30,43 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         // GETS a specific User by ID and returns it to the front end (JQuery) in Json formatting
         public ActionResult Get(int? id) {
             return Json(db.Users.Find(id), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // REMOVES a specific User by ID
+        public ActionResult Remove(int? id) {
+            if (id == null || db.Users.Find(id) == null) {
+                return Json(new Msg { Result = "Failed", Message = "User not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully deleted" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // CREATES a User with a passed in User object
+        public ActionResult Add([Api.FromBody] User user) {
+            db.Users.Add(user);
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully added" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // UPDATES a User with a passed in User object
+        public ActionResult Change([Api.FromBody] User aUser) {
+            User user = db.Users.Find(aUser.ID);
+            user.UserName = aUser.UserName;
+            user.FirstName = aUser.FirstName;
+            user.LastName = aUser.LastName;
+            user.Phone = aUser.Phone;
+            user.Email = aUser.Email;
+            user.IsReviewer = aUser.IsReviewer;
+            user.IsAdmin = aUser.IsAdmin;
+
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users
