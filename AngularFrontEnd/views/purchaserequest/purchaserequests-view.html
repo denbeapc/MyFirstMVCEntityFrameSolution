@@ -1,0 +1,62 @@
+<div ng-controller="PurchaseRequestCtrl as ctrl">
+	<div>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
+		<a href="#/purchaserequests/add">Create New <span ng-bind="ctrl.PageTitle"></span></a>
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>User</td>
+					<td>Description</td>
+					<td>Justification</td>
+					<td>Date Needed</td>
+					<td>Delivery Mode</td>
+					<td>Docs Attached?</td>
+					<td>Status</td>
+					<td>Total</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Angular function ng-repeat executes for however many rows are in the array/object  -->
+				<!-- 
+					ctrl.PurchaseRequests allows the code to access the PurchaseRequests 
+					array/object established in the prs-purchaserequest-controller class 
+				-->
+				<tr ng-repeat="purchaseRequest in ctrl.PurchaseRequests">
+					<td>
+						<span ng-bind="purchaseRequest.User.FirstName"></span>
+						<span ng-bind="purchaseRequest.User.LastName"></span>
+					</td>
+					<td>
+						<span ng-bind="purchaseRequest.Description"></span>
+					</td>
+					<td>
+						<span ng-bind="purchaseRequest.Justification"></span>
+					</td>
+					<td>
+						<span ng-bind="purchaseRequest.DateNeeded | date:'MM/dd/yyyy'"></span>
+					</td>
+					<td>
+						<span ng-bind="purchaseRequest.DeliveryMode"></span>
+					</td>
+					<td>
+						<span ng-bind="purchaseRequest.DocsAttached"></span>
+					</td>
+					<td>
+						<span ng-bind="purchaseRequest.Status"></span>
+					</td>
+					<td>
+						<span ng-bind="purchaseRequest.Total"></span>
+					</td>
+					<td>
+						<span><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a></span> | 
+						<span><a href="#/purchaserequests/detail/{{purchaseRequest.ID}}">Details</a></span> | 
+						<span><a href="#/purchaserequestlineitems/{{purchaseRequest.ID}}">Lines</a></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -64,3 +64,4 @@ C:\repos\MyFirstMVCEntityFrameSolution\MyFirstMVCEntityFrameProject\bin\EntityFr
 C:\repos\MyFirstMVCEntityFrameSolution\MyFirstMVCEntityFrameProject\obj\Debug\MyFirstMVCEntityFrameProject.Migrations.Initialize.resources
 C:\repos\MyFirstMVCEntityFrameSolution\MyFirstMVCEntityFrameProject\obj\Debug\MyFirstMVCEntityFrameProject.csproj.GenerateResource.Cache
 C:\repos\MyFirstMVCEntityFrameSolution\MyFirstMVCEntityFrameProject\obj\Debug\MyFirstMVCEntityFrameProject.Migrations.UpdatedProducts.resources
+C:\repos\MyFirstMVCEntityFrameSolution\MyFirstMVCEntityFrameProject\obj\Debug\MyFirstMVCEntityFrameProject.Migrations.Newestrelease.resources

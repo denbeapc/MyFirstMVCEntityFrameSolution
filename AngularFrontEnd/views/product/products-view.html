@@ -1,6 +1,7 @@
 <div ng-controller="ProductCtrl as ctrl">
 	<div>
-		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
+		<a href="#/products/add">Create New <span ng-bind="ctrl.PageTitle"></span></a>
 	</div>
 	<div>
 		<table class="table">
@@ -42,8 +43,7 @@
 					</td>
 					<td>
 						<span><a href="#/products/edit/{{product.ID}}">Edit</a></span> | 
-						<span><a href="#/products/detail/{{product.ID}}">Details</a></span> | 
-						<span><a href="#/products/remove/{{product.ID}}">Delete</a></span>
+						<span><a href="#/products/detail/{{product.ID}}">Details</a></span>
 					</td>
 				</tr>
 			</tbody>

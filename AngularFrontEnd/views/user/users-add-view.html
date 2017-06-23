@@ -1,0 +1,80 @@
+<div ng-controller="UserCtrl as ctrl" style="width: 45%; margin: 10px auto;">
+	<div>
+		<span id="PageTitle">Add <span ng-bind="ctrl.PageTitle"></span></span>
+	</div>
+	<div class="form-group row">
+		<label for="user-username" class="col-md-3 control-label" style="text-align: right;">Username</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewUser.UserName" id="user-username">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="user-password" class="col-md-3 control-label" style="text-align: right;">Password</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewUser.Password" id="user-password">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="user-first-name" class="col-md-3 control-label" style="text-align: right;">First Name</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewUser.FirstName" id="user-first-name">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="user-last-name" class="col-md-3 control-label" style="text-align: right;">Last Name</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewUser.LastName" id="user-last-name">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="user-phone" class="col-md-3 control-label" style="text-align: right;">Phone</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewUser.Phone" id="user-phone">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="user-email" class="col-md-3 control-label" style="text-align: right;">Email</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewUser.Email" id="user-email">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="user-reviewer" class="col-md-3 control-label" style="text-align: right;">Is Reviewer?</label>
+
+		<div class="col-md-2">
+			<input class="form-control" type="checkbox"
+			ng-model="ctrl.NewUser.IsReviewer" id="user-reviewer">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="user-admin" class="col-md-3 control-label" style="text-align: right;">Is Admin?</label>
+
+		<div class="col-md-2">
+			<input class="form-control" type="checkbox"
+			ng-model="ctrl.NewUser.IsAdmin" id="user-admin">
+		</div>
+	</div>
+
+	<div class="col-md-offset-3">
+		<button class="btn btn-default" ng-click="ctrl.Add(ctrl.NewUser)">Add</button>
+	</div>
+</div>

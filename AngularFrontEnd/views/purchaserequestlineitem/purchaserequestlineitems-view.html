@@ -1,0 +1,44 @@
+<div ng-controller="PurchaseRequestLineItemCtrl as ctrl">
+	<div>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr><th>ID</th><th>Description</th><th>Total</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><span ng-bind="ctrl.SelectedPurchaseRequest.ID"></span></td>
+					<td><span ng-bind="ctrl.SelectedPurchaseRequest.Description"></span></td>
+					<td><span ng-bind="ctrl.SelectedPurchaseRequest.Total"></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Product</td>
+					<td>Quantity</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="lineItem in ctrl.PurchaseRequestLineItems">
+					<td>
+						<span ng-bind="lineItem.ProductID"></span>
+					</td>
+					<td>
+						<span ng-bind="lineItem.Quantity"></span>
+					</td>
+					<td>
+						<span><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a></span> | 
+						<span><a href="#/purchaserequests/detail/{{purchaseRequest.ID}}">Details</a></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

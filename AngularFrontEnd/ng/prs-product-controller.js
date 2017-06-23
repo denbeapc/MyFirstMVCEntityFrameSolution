@@ -2,11 +2,11 @@ angular
 	.module("PrsApp")
 	.controller("ProductCtrl", ProductCtrl);
 
-// Uses (injects) the libs $http, and $routeParams
-ProductCtrl.$inject = ["$http", "$routeParams"];
+// Uses (injects) the libs $http, $routeParams, and $location
+ProductCtrl.$inject = ["$http", "$routeParams", "$location"];
 
-// Passes the variables of types $http, and $routeParams
-function ProductCtrl($http, $routeParams) {
+// Passes the variables of types $http, $routeParams, and $location
+function ProductCtrl($http, $routeParams, $location) {
 	// Sets a variable self equal to this
 	// This has security issues and can be altered by outside functions
 	var self = this;
@@ -49,4 +49,68 @@ function ProductCtrl($http, $routeParams) {
 				console.log("ERROR:", err);
 			}
 		);
+
+	// JQuery function that updates a specific product from the database given an ID
+	self.Update = function(product) {
+		$http.post("http://localhost:63409/Products/Change", product)
+			.then(
+				// if successful
+				function(resp) {
+					$location.path("/products");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
+
+	self.GetVendors = function() {
+		$http.get("http://localhost:63409/Vendors/List")
+			.then(
+				function(resp) {
+					self.Vendors = resp.data;
+				},
+				function(err) {
+					console.log("ERROR:", err)
+				}
+			);
+	}
+	self.GetVendors();
+
+	// A blank instance of a Product object that will store the values when adding a new Product
+	self.NewProduct = {};
+
+	// JQuery function that adds a new product to the database
+	self.Add = function(product) {
+		$http.post("http://localhost:63409/Products/Add", product)
+			.then(
+				// if successful
+				function(resp) {
+					$location.path("/products");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
+
+	// JQuery function that deletes a specific product from the database given an ID
+	self.Delete = function(id) {
+		$http.post("http://localhost:63409/Products/Remove/" + id)
+			.then(
+				// if successful
+				function(resp) {
+					$location.path("/products");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
 }

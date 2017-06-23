@@ -2,11 +2,11 @@ angular
 	.module("PrsApp")
 	.controller("UserCtrl", UserCtrl);
 
-// Uses (injects) the libs $http, and $routeParams
-UserCtrl.$inject = ["$http", "$routeParams"];
+// Uses (injects) the libs $http, $routeParams, and $location
+UserCtrl.$inject = ["$http", "$routeParams", "$location"];
 
-// Passes the variables of types $http, and $routeParams
-function UserCtrl($http, $routeParams) {
+// Passes the variables of types $http, $routeParams, and $location
+function UserCtrl($http, $routeParams, $location) {
 	// Sets a variable self equal to this
 	// This has security issues and can be altered by outside functions
 	var self = this;
@@ -16,6 +16,10 @@ function UserCtrl($http, $routeParams) {
 
 	// Used to set the Page Title dynamically
 	self.PageTitle = "User";
+
+	// self.DisplayPassword = function(tf) {
+		
+	// }
 
 	// Creates an instance of an array called Users inside the variable Self
 	self.Users = [];
@@ -51,12 +55,46 @@ function UserCtrl($http, $routeParams) {
 		);
 
 	// JQuery function that updates a specific user from the database given an ID
-	self.Update = function() {
-		$http.post("http://localhost:63409/Users/Change/" + self.SelectedUserID)
+	self.Update = function(user) {
+		$http.post("http://localhost:63409/Users/Change", user)
 			.then(
 				// if successful
 				function(resp) {
-					console.log("SUCCESS");
+					$location.path("/users");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
+
+	// A blank instance of a User object that will store the values when adding a new User
+	self.NewUser = {};
+
+	// JQuery function that adds a new user to the database
+	self.Add = function(user) {
+		$http.post("http://localhost:63409/Users/Add", user)
+			.then(
+				// if successful
+				function(resp) {
+					$location.path("/users");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
+
+	// JQuery function that deletes a specific user from the database given an ID
+	self.Delete = function(id) {
+		$http.post("http://localhost:63409/Users/Remove/" + id)
+			.then(
+				// if successful
+				function(resp) {
 					$location.path("/users");
 				},
 				// if error

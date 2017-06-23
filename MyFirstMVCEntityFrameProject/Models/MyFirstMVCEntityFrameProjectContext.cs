@@ -28,6 +28,6 @@ namespace MyFirstMVCEntityFrameProject.Models
 
         public System.Data.Entity.DbSet<MyFirstMVCEntityFrameProject.Models.PurchaseRequest> PurchaseRequests { get; set; }
 
-        public System.Data.Entity.DbSet<MyFirstMVCEntityFrameProject.Models.PurchaseRequestLineItem> LineItems { get; set; }
+        public System.Data.Entity.DbSet<MyFirstMVCEntityFrameProject.Models.PurchaseRequestLineItem> PurchaseRequestLineItems { get; set; }
     }
 }

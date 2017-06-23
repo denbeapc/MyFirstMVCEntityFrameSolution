@@ -55,6 +55,10 @@
 				</tr>
 			</tbody>
 		</table>
-		<span><a href="#/">Edit</a></span> | <span><a href="#/">Delete</a></span>
+		<span>
+			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedProduct.ID)">Delete</button>
+		</span> | 
+		<span><a href="#/products/edit/ctrl.SelectedProduct.ID">Edit</a></span> | 
+		<span><a href="#/products">Back to list</a></span>
 	</div>
 </div>

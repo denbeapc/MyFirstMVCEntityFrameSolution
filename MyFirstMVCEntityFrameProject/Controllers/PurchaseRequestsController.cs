@@ -7,12 +7,84 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyFirstMVCEntityFrameProject.Models;
+using Api = System.Web.Http;
 
 namespace MyFirstMVCEntityFrameProject.Controllers
 {
     public class PurchaseRequestsController : Controller
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
+
+        // -------------- IMPORTANT -------------- //
+        // RETURNS a list of the PurchaseRequest to the front end (JQuery) in Json formatting
+        public ActionResult List() {
+            return Json(db.PurchaseRequests.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // GETS a specific PurchaseRequest by ID and returns it to the front end (JQuery) in Json formatting
+        public ActionResult Get(int? id) {
+            return Json(db.PurchaseRequests.Find(id), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // REMOVES a specific PurchaseRequest by ID
+        public ActionResult Remove(int? id) {
+            if (id == null || db.PurchaseRequests.Find(id) == null) {
+                return Json(new Msg { Result = "Failed", Message = "Purchase Request not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+            PurchaseRequest purchaseRequest = db.PurchaseRequests.Find(id);
+            db.PurchaseRequests.Remove(purchaseRequest);
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully deleted" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // CREATES a PurchaseRequest with a passed in PurchaseRequest object
+        public ActionResult Add([Api.FromBody] PurchaseRequest purchaseRequest) {
+            if (purchaseRequest == null) {
+                return Json(new Msg { Result = "Failure", Message = "Purchase Request is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
+            purchaseRequest.DateNeeded = Convert.ToDateTime(purchaseRequest.DateNeeded);
+            purchaseRequest.SubmittedDate = Convert.ToDateTime(purchaseRequest.SubmittedDate);
+            db.PurchaseRequests.Add(purchaseRequest);
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
+            return Json(new Msg { Result = "OK", Message = "Successfully added" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // UPDATES a PurchaseRequest with a passed in PurchaseRequest object
+        public ActionResult Change([Api.FromBody] PurchaseRequest aPurchaseRequest) {
+            if (aPurchaseRequest.ID == 0) {
+                return Json(new Msg { Result = "Failure", Message = "aPurchaseRequest is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
+            PurchaseRequest purchaseRequest = db.PurchaseRequests.Find(aPurchaseRequest.ID);
+            purchaseRequest.UserID = aPurchaseRequest.UserID;
+            purchaseRequest.Description = aPurchaseRequest.Description;
+            purchaseRequest.Justification = aPurchaseRequest.Justification;
+            purchaseRequest.DateNeeded = Convert.ToDateTime(aPurchaseRequest.DateNeeded);
+            purchaseRequest.DeliveryMode = aPurchaseRequest.DeliveryMode;
+            purchaseRequest.DocsAttached = aPurchaseRequest.DocsAttached;
+            purchaseRequest.Status = aPurchaseRequest.Status;
+            purchaseRequest.Total = aPurchaseRequest.Total;
+            purchaseRequest.SubmittedDate = Convert.ToDateTime(aPurchaseRequest.SubmittedDate);
+
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
+            return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: PurchaseRequests
         public ActionResult Index()

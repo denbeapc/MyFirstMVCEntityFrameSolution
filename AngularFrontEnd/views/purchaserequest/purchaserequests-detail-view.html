@@ -1,0 +1,80 @@
+<div ng-controller="PurchaseRequestCtrl as ctrl">
+	<div>
+		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
+	</div>
+	<div>
+		<table id="DetailTable" class="table">
+			<tbody>
+				<tr>
+					<td>
+						<span class="DetailHeading">User </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedPurchaseRequest.User.UserName"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Description </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedPurchaseRequest.Description"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Justification </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedPurchaseRequest.Justification"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Date Needed </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedPurchaseRequest.DateNeeded | date: 'MM/dd/yyyy'"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Delivery Mode </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedPurchaseRequest.DeliveryMode"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Docs Attached? </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedPurchaseRequest.DocsAttached"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Status </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedPurchaseRequest.Status"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="DetailHeading">Total </span>
+					</td>
+					<td>
+						<span ng-bind="ctrl.SelectedPurchaseRequest.Total"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<span>
+			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedPurchaseRequest.ID)">Delete</button>
+		</span> | 
+		<span><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a></span> |
+		<span><a href="#/purchaserequests">Back to list</a></span>
+	</div>
+</div>

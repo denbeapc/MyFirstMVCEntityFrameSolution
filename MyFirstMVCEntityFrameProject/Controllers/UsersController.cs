@@ -43,14 +43,27 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         // -------------- IMPORTANT -------------- //
         // CREATES a User with a passed in User object
         public ActionResult Add([Api.FromBody] User user) {
+            if (user == null) {
+                return Json(new Msg { Result = "Failure", Message = "User is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
             db.Users.Add(user);
-            db.SaveChanges();
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
             return Json(new Msg { Result = "OK", Message = "Successfully added" }, JsonRequestBehavior.AllowGet);
         }
 
         // -------------- IMPORTANT -------------- //
         // UPDATES a User with a passed in User object
         public ActionResult Change([Api.FromBody] User aUser) {
+            if(aUser.ID == 0) {
+                return Json(new Msg { Result = "Failure", Message = "aUser is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
             User user = db.Users.Find(aUser.ID);
             user.UserName = aUser.UserName;
             user.FirstName = aUser.FirstName;
@@ -60,7 +73,12 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             user.IsReviewer = aUser.IsReviewer;
             user.IsAdmin = aUser.IsAdmin;
 
-            db.SaveChanges();
+            try {
+                db.SaveChanges();
+            } catch(Exception ex) {
+                var e = ex;
+            }
+            
             return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
         }
 

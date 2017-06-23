@@ -43,16 +43,28 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         // -------------- IMPORTANT -------------- //
         // CREATES a Product with a passed in Product object
         public ActionResult Add([Api.FromBody] Product product) {
+            if (product == null) {
+                return Json(new Msg { Result = "Failure", Message = "aUser is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
             db.Products.Add(product);
-            db.SaveChanges();
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
             return Json(new Msg { Result = "OK", Message = "Successfully added" }, JsonRequestBehavior.AllowGet);
         }
 
         // -------------- IMPORTANT -------------- //
         // UPDATES a Product with a passed in Product object
         public ActionResult Change([Api.FromBody] Product aProduct) {
+            if (aProduct.ID == 0) {
+                return Json(new Msg { Result = "Failure", Message = "aUser is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
             Product product = db.Products.Find(aProduct.ID);
-            product.Vendor = aProduct.Vendor;
             product.VendorID = aProduct.VendorID;
             product.Name = aProduct.Name;
             product.VendorPartNumber = aProduct.VendorPartNumber;
@@ -60,7 +72,12 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             product.Unit = aProduct.Unit;
             product.Photopath = aProduct.Photopath;
 
-            db.SaveChanges();
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
             return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
         }
 

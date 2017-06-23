@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html ng-app="PrsApp">
 <head><title></title>
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+
 	<!-- JQUERY -->
 	<script src="http://code.jquery.com/jquery-3.1.0.min.js" type="text/javascript"></script>
 
@@ -14,6 +16,8 @@
 	<script src="ng/prs-user-controller.js" type="text/javascript"></script>
 	<script src="ng/prs-vendor-controller.js" type="text/javascript"></script>
 	<script src="ng/prs-product-controller.js" type="text/javascript"></script>
+	<script src="ng/prs-purchaserequests-controller.js" type="text/javascript"></script>
+	<script src="ng/prs-purchaserequestlineitems-controller.js" type="text/javascript"></script>
 	<script src="ng/prs-config.js" type="text/javascript"></script>
 
 	<!-- JS -->
@@ -24,7 +28,7 @@
 </head>
 <body>
 	<div id="menu">
-		<nav class="nav navbar-inverse"> 
+		<nav class="nav navbar-default"> 
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -43,6 +47,7 @@
 						<li><a href="#/users">Users</a></li>
 						<li><a href="#/vendors">Vendors</a></li>
 						<li><a href="#/products">Products</a></li>
+						<li><a href="#/purchaserequests">Requests</a></li>
 						<li><a href="#/about">About</a></li>
 					</ul>
 				</div>

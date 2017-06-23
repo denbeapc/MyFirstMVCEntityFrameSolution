@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyFirstMVCEntityFrameProject.Models;
+using Api = System.Web.Http;
 
 namespace MyFirstMVCEntityFrameProject.Controllers
 {
@@ -14,10 +15,73 @@ namespace MyFirstMVCEntityFrameProject.Controllers
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
 
+        // -------------- IMPORTANT -------------- //
+        // RETURNS a list of the PurchaseRequestLineItems to the front end (JQuery) in Json formatting
+        public ActionResult List() {
+            return Json(db.PurchaseRequestLineItems.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // GETS a specific PurchaseRequestLineItem by ID and returns it to the front end (JQuery) in Json formatting
+        public ActionResult Get(int? id) {
+            return Json(db.PurchaseRequestLineItems.Find(id), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // REMOVES a specific PurchaseRequestLineItem by ID
+        public ActionResult Remove(int? id) {
+            if (id == null || db.PurchaseRequestLineItems.Find(id) == null) {
+                return Json(new Msg { Result = "Failed", Message = "Purchase Request Line Item not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+            PurchaseRequestLineItem purchaseRequestLineItem = db.PurchaseRequestLineItems.Find(id);
+            db.PurchaseRequestLineItems.Remove(purchaseRequestLineItem);
+            db.SaveChanges();
+            return Json(new Msg { Result = "OK", Message = "Successfully deleted" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // CREATES a PurchaseRequestLineItem with a passed in PurchaseRequestLineItem object
+        public ActionResult Add([Api.FromBody] PurchaseRequestLineItem purchaseRequestLineItem) {
+            if (purchaseRequestLineItem == null) {
+                return Json(new Msg { Result = "Failure", Message = "Purchase Request Line Item is empty" }, JsonRequestBehavior.AllowGet);
+            }
+            
+            db.PurchaseRequestLineItems.Add(purchaseRequestLineItem);
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
+            return Json(new Msg { Result = "OK", Message = "Successfully added" }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // UPDATES a PurchaseRequestLineItem with a passed in PurchaseRequestLineItem object
+        public ActionResult Change([Api.FromBody] PurchaseRequestLineItem aPurchaseRequestLineItem) {
+            if (aPurchaseRequestLineItem.ID == 0) {
+                return Json(new Msg { Result = "Failure", Message = "aPurchaseRequestLineItem is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
+            PurchaseRequestLineItem purchaseRequestLineItem = db.PurchaseRequestLineItems.Find(aPurchaseRequestLineItem.ID);
+            purchaseRequestLineItem.ProductID = aPurchaseRequestLineItem.ProductID;
+            purchaseRequestLineItem.PurchaseRequestID = aPurchaseRequestLineItem.PurchaseRequestID;
+            purchaseRequestLineItem.Quantity = aPurchaseRequestLineItem.Quantity;
+
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
+            return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: PurchaseRequestLineItems
         public ActionResult Index()
         {
-            var lineItems = db.LineItems.Include(p => p.Product).Include(p => p.PurchaseRequest);
+            var lineItems = db.PurchaseRequestLineItems.Include(p => p.Product).Include(p => p.PurchaseRequest);
             return View(lineItems.ToList());
         }
 
@@ -28,7 +92,7 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseRequestLineItem purchaseRequestLineItem = db.LineItems.Find(id);
+            PurchaseRequestLineItem purchaseRequestLineItem = db.PurchaseRequestLineItems.Find(id);
             if (purchaseRequestLineItem == null)
             {
                 return HttpNotFound();
@@ -53,7 +117,7 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.LineItems.Add(purchaseRequestLineItem);
+                db.PurchaseRequestLineItems.Add(purchaseRequestLineItem);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -70,7 +134,7 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseRequestLineItem purchaseRequestLineItem = db.LineItems.Find(id);
+            PurchaseRequestLineItem purchaseRequestLineItem = db.PurchaseRequestLineItems.Find(id);
             if (purchaseRequestLineItem == null)
             {
                 return HttpNotFound();
@@ -105,7 +169,7 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseRequestLineItem purchaseRequestLineItem = db.LineItems.Find(id);
+            PurchaseRequestLineItem purchaseRequestLineItem = db.PurchaseRequestLineItems.Find(id);
             if (purchaseRequestLineItem == null)
             {
                 return HttpNotFound();
@@ -118,8 +182,8 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PurchaseRequestLineItem purchaseRequestLineItem = db.LineItems.Find(id);
-            db.LineItems.Remove(purchaseRequestLineItem);
+            PurchaseRequestLineItem purchaseRequestLineItem = db.PurchaseRequestLineItems.Find(id);
+            db.PurchaseRequestLineItems.Remove(purchaseRequestLineItem);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

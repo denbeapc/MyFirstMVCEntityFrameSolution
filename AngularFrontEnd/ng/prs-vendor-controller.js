@@ -2,11 +2,11 @@ angular
 	.module("PrsApp")
 	.controller("VendorCtrl", VendorCtrl);
 
-// Uses (injects) the libs $http, and $routeParams
-VendorCtrl.$inject = ["$http", "$routeParams"];
+// Uses (injects) the libs $http, $routeParams, and $location
+VendorCtrl.$inject = ["$http", "$routeParams", "$location"];
 
-// Passes the variables of types $http, and $routeParams
-function VendorCtrl($http, $routeParams) {
+// Passes the variables of types $http, $routeParams, and $location
+function VendorCtrl($http, $routeParams, $location) {
 	// Sets a variable self equal to this
 	// This has security issues and can be altered by outside functions
 	var self = this;
@@ -49,4 +49,55 @@ function VendorCtrl($http, $routeParams) {
 				console.log("ERROR:", err);
 			}
 		);
+
+	// JQuery function that updates a specific vendor from the database given an ID
+	self.Update = function(vendor) {
+		$http.post("http://localhost:63409/Vendors/Change", vendor)
+			.then(
+				// if successful
+				function(resp) {
+					$location.path("/vendors");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
+
+	// A blank instance of a Vendor object that will store the values when adding a new Vendor
+	self.NewVendor = {};
+
+	// JQuery function that adds a new vendor to the database
+	self.Add = function(vendor) {
+		$http.post("http://localhost:63409/Vendors/Add", vendor)
+			.then(
+				// if successful
+				function(resp) {
+					$location.path("/vendors");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
+
+	// JQuery function that deletes a specific vendor from the database given an ID
+	self.Delete = function(id) {
+		$http.post("http://localhost:63409/Vendors/Remove/" + id)
+			.then(
+				// if successful
+				function(resp) {
+					$location.path("/vendors");
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
 }

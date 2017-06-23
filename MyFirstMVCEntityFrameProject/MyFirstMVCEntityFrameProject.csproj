@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201706151813354_Updated-Products.Designer.cs">
       <DependentUpon>201706151813354_Updated-Products.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706231556541_Newest-release.cs" />
+    <Compile Include="Migrations\201706231556541_Newest-release.Designer.cs">
+      <DependentUpon>201706231556541_Newest-release.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProductEditView.cs" />
     <Compile Include="Models\PurchaseRequestLineItem.cs" />
@@ -314,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706151813354_Updated-Products.resx">
       <DependentUpon>201706151813354_Updated-Products.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706231556541_Newest-release.resx">
+      <DependentUpon>201706231556541_Newest-release.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

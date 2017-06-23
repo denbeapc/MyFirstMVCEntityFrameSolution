@@ -1,0 +1,73 @@
+<div ng-controller="ProductCtrl as ctrl" style="width: 45%;">
+	<div>
+		<span id="PageTitle">Add <span ng-bind="ctrl.PageTitle"></span></span>
+	</div>
+	<hr>
+	<div class="form-group row">
+		<label for="product-id" class="col-md-3 control-label" style="text-align: right;">ID</label>
+
+		<div class="col-md-9">
+			<input class="form-control" disabled="disalbed" type="text"
+			ng-model="ctrl.NewProduct.ID" id="product-id">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="product-vendor" class="col-md-3 control-label" style="text-align: right;">Vendor</label>
+
+		<div class="col-md-9">
+			<select class="form-control" ng-model="ctrl.NewProduct.VendorID" id="product-vendor">
+				<option ng-repeat="vendor in ctrl.Vendors" value="{{vendor.ID}}">{{vendor.Name}}</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="product-name" class="col-md-3 control-label" style="text-align: right;">Name</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewProduct.Name" id="product-name">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="product-part-num" class="col-md-3 control-label" style="text-align: right;">Part Number</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewProduct.VendorPartNumber" id="product-part-num">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="product-price" class="col-md-3 control-label" style="text-align: right;">Price ($ - USD)</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewProduct.Price" id="product-price">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="product-unit" class="col-md-3 control-label" style="text-align: right;">Unit</label>
+
+		<div class="col-md-9">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewProduct.Unit" id="product-unit">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="product-photopath" class="col-md-3 control-label" style="text-align: right;">Photopath</label>
+
+		<div class="col-md-2">
+			<input class="form-control" type="text"
+			ng-model="ctrl.NewProduct.Photopath" id="product-photopath">
+		</div>
+	</div>
+
+	<div class="col-md-offset-3">
+		<button class="btn btn-default" ng-click="ctrl.Add(ctrl.NewProduct)">Add</button>
+	</div>
+</div>

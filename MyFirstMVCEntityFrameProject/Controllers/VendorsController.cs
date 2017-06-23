@@ -43,14 +43,27 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         // -------------- IMPORTANT -------------- //
         // CREATES a Vendor with a passed in Vendor object
         public ActionResult Add([Api.FromBody] Vendor vendor) {
+            if (vendor == null) {
+                return Json(new Msg { Result = "Failure", Message = "Vendor is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
             db.Vendors.Add(vendor);
-            db.SaveChanges();
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
             return Json(new Msg { Result = "OK", Message = "Successfully added" }, JsonRequestBehavior.AllowGet);
         }
 
         // -------------- IMPORTANT -------------- //
         // UPDATES a Vendor with a passed in Vendor object
         public ActionResult Change([Api.FromBody] Vendor aVendor) {
+            if (aVendor.ID == 0) {
+                return Json(new Msg { Result = "Failure", Message = "aVendor is empty" }, JsonRequestBehavior.AllowGet);
+            }
+
             Vendor vendor = db.Vendors.Find(aVendor.ID);
             vendor.Code = aVendor.Code;
             vendor.Name = aVendor.Name;
@@ -62,7 +75,12 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             vendor.Email = aVendor.Email;
             vendor.IsRecommended = aVendor.IsRecommended;
 
-            db.SaveChanges();
+            try {
+                db.SaveChanges();
+            } catch (Exception ex) {
+                var e = ex;
+            }
+
             return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
         }
 
