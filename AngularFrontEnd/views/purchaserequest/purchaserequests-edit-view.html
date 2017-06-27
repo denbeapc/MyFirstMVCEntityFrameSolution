@@ -7,8 +7,8 @@
 		<label for="purchaserequest-user" class="col-md-3 control-label" style="text-align: right;">User</label>
 
 		<div class="col-md-9">
-			<select class="form-control" ng-model="ctrl.SelectedPurchaseRequest.UserID" id="purchaserequest-user">
-				<option ng-repeat="user in ctrl.Users" value="{{user.ID}}">{{user.FirstName + " " + user.LastName}}</option>
+			<select class="form-control" ng-model="ctrl.SelectedPurchaseRequest.UserID" id="purchaserequest-user"
+			ng-options="user.ID as user.FirstName + ' ' + user.LastName for user in ctrl.Users">
 			</select> 
 		</div>
 	</div>
@@ -44,8 +44,8 @@
 		<label for="purchaserequest-deliver-mode" class="col-md-3 control-label" style="text-align: right;">Delivery Mode</label>
 
 		<div class="col-md-9">
-			<select class="form-control" ng-model="ctrl.SelectedPurchaseRequest.DeliveryMode" id="purchaserequest-delivery-mode">
-				<option ng-repeat="service in ctrl.DeliveryOptions" value="{{service}}">{{service}}</option>
+			<select class="form-control" ng-model="ctrl.SelectedPurchaseRequest.DeliveryMode" id="purchaserequest-delivery-mode"
+			ng-options="service for service in ctrl.DeliveryOptions">
 			</select>
 		</div>
 	</div>

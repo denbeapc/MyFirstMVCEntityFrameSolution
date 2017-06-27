@@ -18,13 +18,15 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         // -------------- IMPORTANT -------------- //
         // RETURNS a list of the PurchaseRequest to the front end (JQuery) in Json formatting
         public ActionResult List() {
-            return Json(db.PurchaseRequests.ToList(), JsonRequestBehavior.AllowGet);
+            //return Json(db.PurchaseRequests.ToList(), JsonRequestBehavior.AllowGet);
+            return new JsonNetResult { Data = db.PurchaseRequests.ToList() };
         }
 
         // -------------- IMPORTANT -------------- //
         // GETS a specific PurchaseRequest by ID and returns it to the front end (JQuery) in Json formatting
         public ActionResult Get(int? id) {
-            return Json(db.PurchaseRequests.Find(id), JsonRequestBehavior.AllowGet);
+            //return Json(db.PurchaseRequests.Find(id), JsonRequestBehavior.AllowGet);
+            return new JsonNetResult { Data = db.PurchaseRequests.Find(id) };
         }
 
         // -------------- IMPORTANT -------------- //

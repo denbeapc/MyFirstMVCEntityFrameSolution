@@ -202,6 +202,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="JsonNetResult.cs" />
     <Compile Include="Migrations\201706141955045_Initialize.cs" />
     <Compile Include="Migrations\201706141955045_Initialize.Designer.cs">
       <DependentUpon>201706141955045_Initialize.cs</DependentUpon>

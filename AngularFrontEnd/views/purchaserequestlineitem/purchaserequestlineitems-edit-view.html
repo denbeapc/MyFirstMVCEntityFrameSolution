@@ -7,8 +7,7 @@
 		<label for="purchaserequestlineitem-product" class="col-md-3 control-label" style="text-align: right;">Product</label>
 
 		<div class="col-md-9">
-			<select class="form-control" ng-model="ctrl.SelectedPurchaseRequestLineItem.ProductID" id="purchaserequestlineitem-product">
-				<option ng-repeat="product in ctrl.Products" value="{{product.ID}}">{{product.Name}}</option>
+			<select class="form-control" ng-model="ctrl.SelectedPurchaseRequestLineItem.ProductID" id="purchaserequestlineitem-product" ng-options="product.ID as product.Name for product in ctrl.Products">
 			</select>
 		</div>
 	</div>

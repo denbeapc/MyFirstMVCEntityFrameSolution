@@ -2,9 +2,9 @@ angular
 	.module("PrsApp")
 	.controller("PurchaseRequestCtrl", PurchaseRequestCtrl);
 
-PurchaseRequestCtrl.$inject = ["$http", "$routeParams", "$location", "PurchaseRequestSvc", "UserSvc"];
+PurchaseRequestCtrl.$inject = ["$http", "$routeParams", "$location", "PurchaseRequestSvc", "UserSvc", "SystemSvc"];
 
-function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc, UserSvc) {
+function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc, UserSvc, SystemSvc) {
 	var self = this;
 	self.PageTitle = "Purchase Request";
 
@@ -17,8 +17,8 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 						self.PurchaseRequests = resp.data;
 
 						for(var idx in self.PurchaseRequests) {
-							var pr = self.PurchaseRequests[idx];
-							pr.DateNeeded = Number(pr.DateNeeded.replace('/Date(','').replace(')/',''));
+							self.PurchaseRequests[idx].DateNeeded 
+								= SystemSvc.ConvertToJsonDate(self.PurchaseRequests[idx].DateNeeded);
 						}
 					} catch(error) {
 						console.log(error.message);
@@ -44,8 +44,8 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 					try {
 						self.SelectedPurchaseRequest = resp.data;
 
-						self.SelectedPurchaseRequest.DateNeeded
-							= Number(self.SelectedPurchaseRequest.DateNeeded.replace('/Date(','').replace(')/',''));
+						self.SelectedPurchaseRequest.DateNeeded 
+							= SystemSvc.ConvertToJsonDate(self.SelectedPurchaseRequest.DateNeeded);
 					} catch(error) {
 						console.log(error.message);
 					}
@@ -74,6 +74,7 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 	}
 
 	self.NewPurchaseRequest = {
+		Status: "New",
 		SubmittedDate: new Date()
 	};
 

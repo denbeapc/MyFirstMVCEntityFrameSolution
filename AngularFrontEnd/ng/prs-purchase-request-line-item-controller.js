@@ -97,7 +97,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route,
 		PurchaseRequestLineItemSvc.Get(id)
 			.then(
 				function(resp) {
-					self.PurchaseRequestLineItem = resp.data;
+					self.SelectedPurchaseRequestLineItem = resp.data;
 				},
 				function(err) {
 					console.log("[ERROR] ", err);
@@ -108,7 +108,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route,
 
 	// JQuery function that updates a specific purchase request from the database given an ID
 	self.Update = function(purchaserequestlineitem) {
-		PurchaseRequestLineItemSvc.Change(id)
+		PurchaseRequestLineItemSvc.Change(purchaserequestlineitem)
 			.then(
 				function(resp) {
 					$location.path("/purchaserequestlineitems/" + purchaserequestlineitem.PurchaseRequestID);
@@ -137,7 +137,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route,
 	}
 
 	// JQuery function that deletes a specific purchase request from the database given an ID
-	self.Delete = function(id, pr) {
+	self.Delete = function(id) {
 		PurchaseRequestLineItemSvc.Remove(id)
 			.then(
 				function(resp) {
