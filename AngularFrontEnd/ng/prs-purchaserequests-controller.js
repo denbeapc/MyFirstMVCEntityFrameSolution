@@ -23,53 +23,61 @@ function PurchaseRequestCtrl($http, $routeParams, $location) {
 	self.DeliveryOptions = [ "USPS", "FedEx", "UPS", "DHL Express" ];
 
 	// JQuery function that retrieves a data list of type PurchaseRequests from the database
-	$http.get("http://localhost:63409/PurchaseRequests/List")
-		.then(
-			// if successful
-			function(resp) {
-				// .data allows the user to access the part of the json object that contains the PurchaseRequest object
-				try {
-					self.PurchaseRequests = resp.data;
+	self.GetPurchaseRequests = function() {
+		$http.get("http://localhost:63409/PurchaseRequests/List")
+			.then(
+				// if successful
+				function(resp) {
+					// .data allows the user to access the part of the json object that contains the PurchaseRequest object
+					try {
+						self.PurchaseRequests = resp.data;
 
-					// Both DateNeeded and SubmittedDate are converted to String Dates accepted by AngularJS
-					for(var idx in self.PurchaseRequests) {
-						self.PurchaseRequests[idx].DateNeeded 
-							= Number(self.PurchaseRequests[idx].DateNeeded.replace('/Date(','').replace(')/',''));
+						// Both DateNeeded and SubmittedDate are converted to String Dates accepted by AngularJS
+						for(var idx in self.PurchaseRequests) {
+							self.PurchaseRequests[idx].DateNeeded 
+								= Number(self.PurchaseRequests[idx].DateNeeded.replace('/Date(','').replace(')/',''));
 
+						}
+					} catch(error) {
+						console.log(error.message);
 					}
-				} catch(error) {
-					console.log(error.message);
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
 				}
-			},
-			// if error
-			function(err) {
-				// Print error
-				console.log("ERROR:", err);
-			}
-		);
+			);
+	}
+	self.GetPurchaseRequests();
 
 	// JQuery function that retrieves a specific purchase request from the database given an ID
-	$http.get("http://localhost:63409/PurchaseRequests/Get/" + self.SelectedPurchaseRequestID)
-		.then(
-			// if successful
-			function(resp) {
-				// .data allows the user to access the part of the json object that contains the PurchaseRequest object
-				try {
-					self.SelectedPurchaseRequest = resp.data;
+	self.GetPurchaseRequest = function(id) {
+		if(id == undefined)
+			return;
+		$http.get("http://localhost:63409/PurchaseRequests/Get/" + self.SelectedPurchaseRequestID)
+			.then(
+				// if successful
+				function(resp) {
+					// .data allows the user to access the part of the json object that contains the PurchaseRequest object
+					try {
+						self.SelectedPurchaseRequest = resp.data;
 
-					// Both DateNeeded and SubmittedDate are converted to String Dates accepted by AngularJS
-					self.SelectedPurchaseRequest.DateNeeded
-						= Number(self.SelectedPurchaseRequest.DateNeeded.replace('/Date(','').replace(')/',''));
-				} catch(error) {
-					console.log(error.message);
+						// Both DateNeeded and SubmittedDate are converted to String Dates accepted by AngularJS
+						self.SelectedPurchaseRequest.DateNeeded
+							= Number(self.SelectedPurchaseRequest.DateNeeded.replace('/Date(','').replace(')/',''));
+					} catch(error) {
+						console.log(error.message);
+					}
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
 				}
-			},
-			// if error
-			function(err) {
-				// Print error
-				console.log("ERROR:", err);
-			}
-		);
+			);
+	}
+	self.GetPurchaseRequest(self.SelectedPurchaseRequestID)
 
 	// JQuery function that updates a specific purchase request from the database given an ID
 	self.Update = function(purchaserequest) {
@@ -88,7 +96,9 @@ function PurchaseRequestCtrl($http, $routeParams, $location) {
 	}
 
 	// A blank instance of a PurchaseRequest object that will store the values when adding a new PurchaseRequest
-	self.NewPurchaseRequest = {};
+	self.NewPurchaseRequest = {
+		SubmittedDate: new Date()
+	};
 
 	// JQuery function that adds a new purchase request to the database
 	self.Add = function(purchaserequest) {

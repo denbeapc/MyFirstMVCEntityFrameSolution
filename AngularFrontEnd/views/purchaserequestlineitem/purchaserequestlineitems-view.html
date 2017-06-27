@@ -1,6 +1,8 @@
-<div ng-controller="PurchaseRequestLineItemCtrl as ctrl">
+<div>
 	<div>
-		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
+		<span id="PageTitle">List of Purchase Request <span ng-bind="ctrl.PageTitle"></span></span><br />
+		<a href="#/purchaserequestlineitems/add/{{ctrl.SelectedPurchaseRequest.ID}}">Add New Line Item</a> - 
+		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
 	</div>
 	<div>
 		<table class="table">
@@ -11,7 +13,7 @@
 				<tr>
 					<td><span ng-bind="ctrl.SelectedPurchaseRequest.ID"></span></td>
 					<td><span ng-bind="ctrl.SelectedPurchaseRequest.Description"></span></td>
-					<td><span ng-bind="ctrl.SelectedPurchaseRequest.Total"></span></td>
+					<td>$<span ng-bind="ctrl.SelectedPurchaseRequest.Total"></span></td>
 				</tr>
 			</tbody>
 		</table>
@@ -26,16 +28,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="lineItem in ctrl.PurchaseRequestLineItems">
+				<tr ng-repeat="lineItem in ctrl.PurchaseRequestLineItems | filter: ctrl.SearchCriteria">
+					<td><span ng-bind="lineItem.Product.Name"></span></td>
+					<td><span ng-bind="lineItem.Quantity"></span></td>
 					<td>
-						<span ng-bind="lineItem.ProductID"></span>
-					</td>
-					<td>
-						<span ng-bind="lineItem.Quantity"></span>
-					</td>
-					<td>
-						<span><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a></span> | 
-						<span><a href="#/purchaserequests/detail/{{purchaseRequest.ID}}">Details</a></span>
+						<span>
+							<button class="btn btn-danger" ng-click="ctrl.Delete(lineItem.ID, ctrl.SelectedPurchaseRequest.ID)">Delete</button>
+						</span> | 
+						<span><a href="#/purchaserequestlineitems/edit/{{lineItem.ID}}">Edit</a></span>
 					</td>
 				</tr>
 			</tbody>

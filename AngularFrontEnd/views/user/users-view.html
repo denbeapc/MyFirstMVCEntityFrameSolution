@@ -1,8 +1,8 @@
-<div ng-controller="UserCtrl as ctrl">
+<div>
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
-		<a href="#/users/add">Create New <span ng-bind="ctrl.PageTitle"></span></a> - 
-		<label>Search: <input ng-model:"ctrl.SearchCriteria"></label>
+		<a href="#/users/add">Create New</a> - 
+		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
 	</div>
 	<div>
 		<table class="table">
@@ -24,9 +24,7 @@
 					array/object established in the prs-user-controller class 
 				-->
 				<tr ng-repeat="user in ctrl.Users | filter: ctrl.SearchCriteria">
-					<td>
-						<span ng-bind="user.UserName"></span>
-					</td>
+					<td><span ng-bind="user.UserName"></span></td>
 					<!-- <td ng-if="ctrl.DisplayPassword">
 						<span ng-bind="user.Password"></span>
 					</td>
@@ -37,25 +35,13 @@
 						<span ng-bind="user.FirstName"></span>
 						<span ng-bind="user.LastName"></span>
 					</td>
+					<td><span ng-bind="user.Phone"></span></td>
+					<td><span ng-bind="user.Email"></span></td>
+					<td><span ng-bind="user.IsReviewer"></span></td>
+					<td><span ng-bind="user.IsAdmin"></span></td>
 					<td>
-						<span ng-bind="user.Phone"></span>
-					</td>
-					<td>
-						<span ng-bind="user.Email"></span>
-					</td>
-					<td>
-						<span ng-bind="user.IsReviewer"></span>
-					</td>
-					<td>
-						<span ng-bind="user.IsAdmin"></span>
-					</td>
-					<td>
-						<span>
-							<a href="#/users/edit/{{user.ID}}">Edit</a>
-						</span> | 
-						<span>
-							<a href="#/users/detail/{{user.ID}}">Details</a>
-						</span>
+						<span><a href="#/users/edit/{{user.ID}}">Edit</a></span> | 
+						<span><a href="#/users/detail/{{user.ID}}">Details</a></span>
 					</td>
 				</tr>
 			</tbody>

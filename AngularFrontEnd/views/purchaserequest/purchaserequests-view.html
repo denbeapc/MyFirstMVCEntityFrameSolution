@@ -1,7 +1,8 @@
-<div ng-controller="PurchaseRequestCtrl as ctrl">
+<div>
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
-		<a href="#/purchaserequests/add">Create New <span ng-bind="ctrl.PageTitle"></span></a>
+		<a href="#/purchaserequests/add">Create New</a> - 
+		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
 	</div>
 	<div>
 		<table class="table">
@@ -24,32 +25,18 @@
 					ctrl.PurchaseRequests allows the code to access the PurchaseRequests 
 					array/object established in the prs-purchaserequest-controller class 
 				-->
-				<tr ng-repeat="purchaseRequest in ctrl.PurchaseRequests">
+				<tr ng-repeat="purchaseRequest in ctrl.PurchaseRequests | filter: ctrl.SearchCriteria">
 					<td>
 						<span ng-bind="purchaseRequest.User.FirstName"></span>
 						<span ng-bind="purchaseRequest.User.LastName"></span>
 					</td>
-					<td>
-						<span ng-bind="purchaseRequest.Description"></span>
-					</td>
-					<td>
-						<span ng-bind="purchaseRequest.Justification"></span>
-					</td>
-					<td>
-						<span ng-bind="purchaseRequest.DateNeeded | date:'MM/dd/yyyy'"></span>
-					</td>
-					<td>
-						<span ng-bind="purchaseRequest.DeliveryMode"></span>
-					</td>
-					<td>
-						<span ng-bind="purchaseRequest.DocsAttached"></span>
-					</td>
-					<td>
-						<span ng-bind="purchaseRequest.Status"></span>
-					</td>
-					<td>
-						<span ng-bind="purchaseRequest.Total"></span>
-					</td>
+					<td><span ng-bind="purchaseRequest.Description"></span></td>
+					<td><span ng-bind="purchaseRequest.Justification"></span></td>
+					<td><span ng-bind="purchaseRequest.DateNeeded | date:'MM/dd/yyyy'"></span></td>
+					<td><span ng-bind="purchaseRequest.DeliveryMode"></span></td>
+					<td><span ng-bind="purchaseRequest.DocsAttached"></span></td>
+					<td><span ng-bind="purchaseRequest.Status"></span></td>
+					<td>$<span ng-bind="purchaseRequest.Total"></span></td>
 					<td>
 						<span><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a></span> | 
 						<span><a href="#/purchaserequests/detail/{{purchaseRequest.ID}}">Details</a></span> | 

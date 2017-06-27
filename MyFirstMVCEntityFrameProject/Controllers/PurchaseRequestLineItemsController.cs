@@ -15,10 +15,28 @@ namespace MyFirstMVCEntityFrameProject.Controllers
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
 
+        private void RecalculatePurchaseRequestTotal(int id) {
+            var prlines = db.PurchaseRequestLineItems.Where(prli => prli.PurchaseRequestID == id).ToList();
+            var total = prlines.Sum(r => r.Quantity * db.Products.Single(p => p.ID == r.ProductID).Price);
+            var pr = db.PurchaseRequests.Single(p => p.ID == id);
+            pr.Total = total;
+            db.SaveChanges();
+        }
+
         // -------------- IMPORTANT -------------- //
         // RETURNS a list of the PurchaseRequestLineItems to the front end (JQuery) in Json formatting
         public ActionResult List() {
             return Json(db.PurchaseRequestLineItems.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
+        // RETURNS a list of the PurchaseRequestLineItems that match a PurchaseRequest ID to the front end (JQuery) in Json formatting
+        public ActionResult ListByPurchaseRequest(int? id) {
+            if (id == null)
+                return new EmptyResult();
+
+            var items = db.PurchaseRequestLineItems.Where(pr => pr.PurchaseRequestID == id).ToList();
+            return Json(items, JsonRequestBehavior.AllowGet);
         }
 
         // -------------- IMPORTANT -------------- //
@@ -37,6 +55,7 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             PurchaseRequestLineItem purchaseRequestLineItem = db.PurchaseRequestLineItems.Find(id);
             db.PurchaseRequestLineItems.Remove(purchaseRequestLineItem);
             db.SaveChanges();
+            RecalculatePurchaseRequestTotal(purchaseRequestLineItem.PurchaseRequestID);
             return Json(new Msg { Result = "OK", Message = "Successfully deleted" }, JsonRequestBehavior.AllowGet);
         }
 
@@ -50,6 +69,7 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             db.PurchaseRequestLineItems.Add(purchaseRequestLineItem);
             try {
                 db.SaveChanges();
+                RecalculatePurchaseRequestTotal(purchaseRequestLineItem.PurchaseRequestID);
             } catch (Exception ex) {
                 var e = ex;
             }
@@ -71,6 +91,7 @@ namespace MyFirstMVCEntityFrameProject.Controllers
 
             try {
                 db.SaveChanges();
+                RecalculatePurchaseRequestTotal(purchaseRequestLineItem.PurchaseRequestID);
             } catch (Exception ex) {
                 var e = ex;
             }

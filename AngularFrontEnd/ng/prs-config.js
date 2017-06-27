@@ -124,6 +124,18 @@ function PrsConfig($routeProvider, $locationProvider) {
 			controller: 'PurchaseRequestLineItemCtrl', 
 			controllerAs: 'ctrl'
 		})
+		.when('/purchaserequestlineitems/edit/:id', {
+			// This view has advnaced components to it that rely on the functionality of the prs-purchaserequest-controller class
+			templateUrl: 'views/purchaserequestlineitem/purchaserequestlineitems-edit-view.html',
+			controller: 'PurchaseRequestLineItemCtrl', 
+			controllerAs: 'ctrl'
+		})
+		.when('/purchaserequestlineitems/add/:prId', {
+			// This view has advnaced components to it that rely on the functionality of the prs-purchaserequest-controller class
+			templateUrl: 'views/purchaserequestlineitem/purchaserequestlineitems-add-view.html',
+			controller: 'PurchaseRequestLineItemCtrl', 
+			controllerAs: 'ctrl'
+		})
 		.when('/about', {
 			templateUrl: 'views/about-view.html'
 		})

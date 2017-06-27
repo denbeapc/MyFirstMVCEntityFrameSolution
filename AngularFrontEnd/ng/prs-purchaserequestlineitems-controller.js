@@ -2,11 +2,11 @@ angular
 	.module("PrsApp")
 	.controller("PurchaseRequestLineItemCtrl", PurchaseRequestLineItemCtrl);
 
-// Uses (injects) the libs $http, $routeParams, and $location
-PurchaseRequestLineItemCtrl.$inject = ["$http", "$routeParams", "$location"];
+// Uses (injects) the libs $http, $routeParams, $location, and $route
+PurchaseRequestLineItemCtrl.$inject = ["$http", "$routeParams", "$location", "$route"];
 
-// Passes the variables of types $http, $routeParams, and $location
-function PurchaseRequestLineItemCtrl($http, $routeParams, $location) {
+// Passes the variables of types $http, $routeParams, $location, and $route
+function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route) {
 	// Sets a variable self equal to this
 	// This has security issues and can be altered by outside functions
 	var self = this;
@@ -20,6 +20,34 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location) {
 
 	// Creates an instance of an array called PurchaseRequests inside the variable Self
 	self.PurchaseRequests = [];
+
+	self.GetPurchaseRequests = function() {
+		$http.get("http://localhost:63409/PurchaseRequests/List")
+			.then(
+				// if successful
+				function(resp) {
+					// .data allows the user to access the part of the json object that contains the PurchaseRequest object
+					try {
+						self.PurchaseRequests = resp.data;
+
+						// Both DateNeeded and SubmittedDate are converted to String Dates accepted by AngularJS
+						for(var idx in self.PurchaseRequests) {
+							self.PurchaseRequests[idx].DateNeeded 
+								= Number(self.PurchaseRequests[idx].DateNeeded.replace('/Date(','').replace(')/',''));
+
+						}
+					} catch(error) {
+						console.log(error.message);
+					}
+				},
+				// if error
+				function(err) {
+					// Print error
+					console.log("ERROR:", err);
+				}
+			);
+	}
+	self.GetPurchaseRequests();
 
 	self.GetPurchaseRequest = function(id) {
 		if(id == undefined)
@@ -63,26 +91,13 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location) {
 
 	// JQuery function that retrieves a data list of type PurchaseRequests from the database
 	self.GetPurchaseRequestLineItems = function(prId) {
-		$http.get("http://localhost:63409/PurchaseRequestLineItems/List")
+		var action = (prId == undefined) ? "List" : "ListByPurchaseRequest/" + prId.toString();
+		$http.get("http://localhost:63409/PurchaseRequestLineItems/" + action)
 			.then(
 				// if successful
 				function(resp) {
-					// .data allows the user to access the part of the json object that contains the PurchaseRequest object
-					try {
-						if(prId == undefined) {
-							self.PurchaseRequestLineItems = resp.data;
-						} else {
-							self.PurchaseRequestLineItems = [];
-							for(var idx in resp.data) {
-								var prItem = resp.data[idx];
-								if(prItem.PurchaseRequestID == prId) {
-									self.PurchaseRequestLineItems.push(prItem);
-								}
-							}
-						}
-					} catch(error) {
-						console.log(error.message);
-					}
+					// .data allows the user to access the part of the json object that contains the PurchaseRequestLineItem object
+					self.PurchaseRequestLineItems = resp.data;
 				},
 				// if error
 				function(err) {
@@ -101,7 +116,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location) {
 			.then(
 				// if successful
 				function(resp) {
-					// .data allows the user to access the part of the json object that contains the PurchaseRequest object
+					// .data allows the user to access the part of the json object that contains the PurchaseRequestLineItem object
 					try {
 						self.SelectedPurchaseRequestLineItem = resp.data;
 					} catch(error) {
@@ -119,12 +134,12 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location) {
 
 
 	// JQuery function that updates a specific purchase request from the database given an ID
-	self.Update = function(purchaserequest) {
-		$http.post("http://localhost:63409/PurchaseRequestLineItems/Change", purchaserequest)
+	self.Update = function(purchaserequestlineitem) {
+		$http.post("http://localhost:63409/PurchaseRequestLineItems/Change", purchaserequestlineitem)
 			.then(
 				// if successful
 				function(resp) {
-					$location.path("/purchaserequestlineitems");
+					$location.path("/purchaserequestlineitems/" + purchaserequestlineitem.PurchaseRequestID);
 				},
 				// if error
 				function(err) {
@@ -135,7 +150,9 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location) {
 	}
 
 	// A blank instance of a PurchaseRequest object that will store the values when adding a new PurchaseRequest
-	self.NewPurchaseRequestLineItem = {};
+	self.NewPurchaseRequestLineItem = {
+		PurchaseRequestID: self.SelectedPurchaseRequestID
+	};
 
 	// JQuery function that adds a new purchase request to the database
 	self.Add = function(purchaserequestlineitem) {
@@ -143,7 +160,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location) {
 			.then(
 				// if successful
 				function(resp) {
-					$location.path("/purchaserequestlineitems");
+					$location.path("/purchaserequestlineitems/" + purchaserequestlineitem.PurchaseRequestID);
 				},
 				// if error
 				function(err) {
@@ -154,12 +171,12 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location) {
 	}
 
 	// JQuery function that deletes a specific purchase request from the database given an ID
-	self.Delete = function(id) {
+	self.Delete = function(id, pr) {
 		$http.post("http://localhost:63409/PurchaseRequestLineItems/Remove/" + id)
 			.then(
 				// if successful
 				function(resp) {
-					$location.path("/purchaserequestlineitems");
+					$route.reload();
 				},
 				// if error
 				function(err) {
