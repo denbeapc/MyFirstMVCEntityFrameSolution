@@ -70,18 +70,14 @@ namespace MyFirstMVCEntityFrameProject.Controllers
             purchaseRequest.UserID = aPurchaseRequest.UserID;
             purchaseRequest.Description = aPurchaseRequest.Description;
             purchaseRequest.Justification = aPurchaseRequest.Justification;
-            purchaseRequest.DateNeeded = Convert.ToDateTime(aPurchaseRequest.DateNeeded);
+            purchaseRequest.DateNeeded = aPurchaseRequest.DateNeeded;
             purchaseRequest.DeliveryMode = aPurchaseRequest.DeliveryMode;
             purchaseRequest.DocsAttached = aPurchaseRequest.DocsAttached;
             purchaseRequest.Status = aPurchaseRequest.Status;
             purchaseRequest.Total = aPurchaseRequest.Total;
-            purchaseRequest.SubmittedDate = Convert.ToDateTime(aPurchaseRequest.SubmittedDate);
+            purchaseRequest.SubmittedDate = aPurchaseRequest.SubmittedDate;
 
-            try {
-                db.SaveChanges();
-            } catch (Exception ex) {
-                var e = ex;
-            }
+            db.SaveChanges();
 
             return Json(new Msg { Result = "OK", Message = "Successfully updated" }, JsonRequestBehavior.AllowGet);
         }

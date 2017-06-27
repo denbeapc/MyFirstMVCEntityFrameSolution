@@ -1,12 +1,12 @@
 angular.module("PrsApp")
-	.service("UserSvc", Svc);
+	.service("VendorSvc", Svc);
 
 Svc.$inject = ["$http", "SystemSvc"];
 
 function Svc($http, SystemSvc) {
 	var self = this;
 
-	var ctrlr = "/Users/";
+	var ctrlr = "/Vendors/";
 	var url = SystemSvc.AjaxUrl + ctrlr;
 
 	self.List = function() {

@@ -2,13 +2,15 @@
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
 		<a href="#/users/add">Create New</a> - 
-		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
+		<label>Search: <input ng-model="ctrl.SearchCriteria"></label> - 
+		<label><button ng-click="ctrl.ToggleDisplayPassword()">Toggle Display Passwords</button></label>
 	</div>
 	<div>
 		<table class="table">
 			<thead>
 				<tr>
 					<td>Username</td>
+					<td>Password</td>
 					<td>Name</td>
 					<td>Phone</td>
 					<td>Email</td>
@@ -25,12 +27,8 @@
 				-->
 				<tr ng-repeat="user in ctrl.Users | filter: ctrl.SearchCriteria">
 					<td><span ng-bind="user.UserName"></span></td>
-					<!-- <td ng-if="ctrl.DisplayPassword">
-						<span ng-bind="user.Password"></span>
-					</td>
-					<td ng-if="!ctrl.DisplayPassword">
-						<span>********</span>
-					</td> -->
+					<td ng-if="ctrl.DisplayPassword"><span ng-bind="user.Password"></span></td>
+					<td ng-if="!ctrl.DisplayPassword"><span>********</span></td>
 					<td>
 						<span ng-bind="user.FirstName"></span>
 						<span ng-bind="user.LastName"></span>
