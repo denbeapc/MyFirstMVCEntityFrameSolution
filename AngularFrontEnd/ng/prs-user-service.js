@@ -1,9 +1,9 @@
 angular.module("PrsApp")
 	.service("UserSvc", Svc);
 
-Svc.$inject = ["$http", "SystemSvc"];
+Svc.$inject = ["$http", "$location", "$route", "SystemSvc"];
 
-function Svc($http, SystemSvc) {
+function Svc($http, $location, $route, SystemSvc) {
 	var self = this;
 
 	var ctrlr = "/Users/";

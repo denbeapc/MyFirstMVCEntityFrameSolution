@@ -3,10 +3,10 @@ angular
 	.controller("UserCtrl", UserCtrl);
 
 // Uses (injects) the libs $http, $routeParams, $location, and the User Service
-UserCtrl.$inject = ["$http", "$routeParams", "$location", "UserSvc"];
+UserCtrl.$inject = ["$http", "$routeParams", "$location", "UserSvc", "SystemSvc"];
 
 // Passes the variables of types $http, $routeParams, $location, and the User Service
-function UserCtrl($http, $routeParams, $location, UserSvc) {
+function UserCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 	// Sets a variable self equal to this
 	// This has security issues and can be altered by outside functions
 	var self = this;
@@ -23,6 +23,23 @@ function UserCtrl($http, $routeParams, $location, UserSvc) {
 				console.log("[ERROR] ", err);
 			}
 		);
+
+	self.LoginUser;
+	self.Login = function(user) {
+		for(var x in self.Users) {
+			if(user.UserName == self.Users[x].UserName && user.Password == self.Users[x].Password) {
+				SystemSvc.SetActiveUser(self.Users[x]);
+				$location.path("/");
+				break;
+			} else {
+				SystemSvc.SetActiveUser(undefined);
+			}
+		}
+
+		if(SystemSvc.GetActiveUser() == undefined) {
+			console.log("LOGIN CREDENTIALS DO NOT MATCH");
+		}
+	}
 
 	// Creates a variable inside of self that takes the (optional) parameters 'id'
 	self.SelectedUserID = $routeParams.id;

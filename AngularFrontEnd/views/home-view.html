@@ -1,3 +1,9 @@
 <div>
-	
+	<span id="PageTitle" ng-bind="ctrl.WelcomeUser"></span><br />
+	<span ng-if="!ctrl.LoggedIn">
+		<a href="/#/login"><button class="btn btn-default">Login</button></a>
+	</span>
+	<span ng-if="ctrl.LoggedIn">
+		<a href="/#/login"><button class="btn btn-default" ng-click="ctrl.Logout()">Logout</button></a>
+	</span>
 </div>

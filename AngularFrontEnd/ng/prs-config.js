@@ -14,7 +14,9 @@ function PrsConfig($routeProvider, $locationProvider) {
 	// $routeProvider establishes dynamically altered views for the HTML code to use
 	$routeProvider
 		.when('/', {
-			templateUrl: 'views/home-view.html'
+			templateUrl: 'views/home-view.html',
+			controller: 'HomeCtrl', 
+			controllerAs: 'ctrl'
 		})
 		.when('/users', {
 			// This view has advnaced components to it that rely on the functionality of the prs-user-controller class
@@ -140,7 +142,9 @@ function PrsConfig($routeProvider, $locationProvider) {
 			templateUrl: 'views/about-view.html'
 		})
 		.when('/login', {
-			templateUrl: 'views/login-view.html'
+			templateUrl: 'views/login-view.html',
+			controller: 'UserCtrl', 
+			controllerAs: 'ctrl'
 		})
 		.otherwise({
 			redirectTo: '/'
