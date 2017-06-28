@@ -143,7 +143,7 @@ function PrsConfig($routeProvider, $locationProvider) {
 		})
 		.when('/login', {
 			templateUrl: 'views/login-view.html',
-			controller: 'UserCtrl', 
+			controller: 'AuthenticationCtrl', 
 			controllerAs: 'ctrl'
 		})
 		.otherwise({

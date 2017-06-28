@@ -2,12 +2,15 @@ angular
 	.module("PrsApp")
 	.controller("ProductCtrl", ProductCtrl);
 
-ProductCtrl.$inject = ["$http", "$routeParams", "$location", "ProductSvc", "VendorSvc"];
+ProductCtrl.$inject = ["$http", "$routeParams", "$location", "ProductSvc", "VendorSvc", "SystemSvc"];
 
-function ProductCtrl($http, $routeParams, $location, ProductSvc, VendorSvc) {
+function ProductCtrl($http, $routeParams, $location, ProductSvc, VendorSvc, SystemSvc) {
 	var self = this;
 	self.PageTitle = "Product";
 
+	SystemSvc.VerifyUserLogin();
+	self.AdminRights = SystemSvc.GetAdminRights();
+	
 	// JQuery function that retrieves a data list of type Product from the database
 	ProductSvc.List()
 		.then(

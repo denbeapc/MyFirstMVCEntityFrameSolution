@@ -8,6 +8,9 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 	var self = this;
 	self.PageTitle = "Purchase Request";
 
+	SystemSvc.VerifyUserLogin();
+	self.AdminRights = SystemSvc.GetAdminRights();
+
 	// JQuery function that retrieves a data list of type PurchaseRequests from the database
 	self.GetPurchaseRequests = function() {
 		PurchaseRequestSvc.List()

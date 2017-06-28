@@ -1,9 +1,11 @@
 <div>
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
-		<a href="#/users/add">Create New</a> - 
-		<label>Search: <input ng-model="ctrl.SearchCriteria"></label> - 
-		<label><button ng-click="ctrl.ToggleDisplayPassword()">Toggle Display Passwords</button></label>
+		<span ng-if="ctrl.AdminRights"><a href="#/users/add">Create New</a> - </span>
+		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
+		<span ng-if="ctrl.AdminRights">
+			 - <button ng-click="ctrl.ToggleDisplayPassword()">Toggle Display Passwords</button>
+		</span>
 	</div>
 	<div>
 		<table class="table">
@@ -38,7 +40,9 @@
 					<td><span ng-bind="user.IsReviewer"></span></td>
 					<td><span ng-bind="user.IsAdmin"></span></td>
 					<td>
-						<span><a href="#/users/edit/{{user.ID}}">Edit</a></span> | 
+						<span ng-if="ctrl.AdminRights">
+							<a href="#/users/edit/{{user.ID}}">Edit</a> | 
+						</span>
 						<span><a href="#/users/detail/{{user.ID}}">Details</a></span>
 					</td>
 				</tr>

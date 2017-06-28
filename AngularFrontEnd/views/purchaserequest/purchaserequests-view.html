@@ -1,7 +1,7 @@
 <div>
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
-		<a href="#/purchaserequests/add">Create New</a> - 
+		<span ng-if="ctrl.AdminRights"><a href="#/purchaserequests/add">Create New</a> - </span>
 		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
 	</div>
 	<div>
@@ -20,11 +20,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- Angular function ng-repeat executes for however many rows are in the array/object  -->
-				<!-- 
-					ctrl.PurchaseRequests allows the code to access the PurchaseRequests 
-					array/object established in the prs-purchaserequest-controller class 
-				-->
 				<tr ng-repeat="purchaseRequest in ctrl.PurchaseRequests | filter: ctrl.SearchCriteria">
 					<td>
 						<span ng-bind="purchaseRequest.User.FirstName"></span>
@@ -38,7 +33,7 @@
 					<td><span ng-bind="purchaseRequest.Status"></span></td>
 					<td>$<span ng-bind="purchaseRequest.Total"></span></td>
 					<td>
-						<span><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a></span> | 
+						<span ng-if="ctrl.AdminRights"><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a> | </span>
 						<span><a href="#/purchaserequests/detail/{{purchaseRequest.ID}}">Details</a></span> | 
 						<span><a href="#/purchaserequestlineitems/{{purchaseRequest.ID}}">Lines</a></span>
 					</td>

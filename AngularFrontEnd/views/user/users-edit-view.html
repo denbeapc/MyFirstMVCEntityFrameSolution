@@ -67,7 +67,7 @@
 	</div>
 
 	<div class="col-md-offset-3">
-		<button class="btn btn-default" ng-click="ctrl.Update(ctrl.SelectedUser)">Save</button>
+		<button class="btn btn-default" ng-hide="!ctrl.AdminRights" ng-click="ctrl.Update(ctrl.SelectedUser)">Save</button>
 	</div>
 	<br /><span><a href="#/users">Back to list</a></span>
 </div>

@@ -1,9 +1,9 @@
 angular.module("PrsApp")
 	.service("SystemSvc", SystemSvc);
 
-SystemSvc.$inject = ["$http", "$filter"];
+SystemSvc.$inject = ["$http", "$filter", "$location"];
 
-function SystemSvc($http, $filter) {
+function SystemSvc($http, $filter, $location) {
 	var self = this;
 	self.about = "System Service";
 
@@ -12,6 +12,24 @@ function SystemSvc($http, $filter) {
 	}
 	self.SetActiveUser = function(user) {
 		self.ActiveUser = user;
+	}
+
+	self.VerifyUserLogin = function() {
+		if(self.ActiveUser == undefined) {
+			$location.path("/login");
+		}
+	}
+
+	self.GetAdminRights = function() {
+		if(self.ActiveUser != undefined) {
+			if(self.ActiveUser.IsAdmin) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		return false;
 	}
 	
 	self.AjaxUrl = "http://localhost:63409";

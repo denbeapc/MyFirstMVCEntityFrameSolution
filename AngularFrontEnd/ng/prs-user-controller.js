@@ -12,6 +12,8 @@ function UserCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 	var self = this;
 	self.PageTitle = "User";
 
+	SystemSvc.VerifyUserLogin();
+
 	// JQuery function that retrieves a data list of type User from the database
 	UserSvc.List()
 		.then(
@@ -23,23 +25,6 @@ function UserCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 				console.log("[ERROR] ", err);
 			}
 		);
-
-	self.LoginUser;
-	self.Login = function(user) {
-		for(var x in self.Users) {
-			if(user.UserName == self.Users[x].UserName && user.Password == self.Users[x].Password) {
-				SystemSvc.SetActiveUser(self.Users[x]);
-				$location.path("/");
-				break;
-			} else {
-				SystemSvc.SetActiveUser(undefined);
-			}
-		}
-
-		if(SystemSvc.GetActiveUser() == undefined) {
-			console.log("LOGIN CREDENTIALS DO NOT MATCH");
-		}
-	}
 
 	// Creates a variable inside of self that takes the (optional) parameters 'id'
 	self.SelectedUserID = $routeParams.id;
@@ -54,6 +39,8 @@ function UserCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 				console.log("[ERROR] ", err);
 			}
 		);
+
+	self.AdminRights = SystemSvc.GetAdminRights();
 
 	self.ShowPassword = function(tf) {
 		self.DisplayPassword = tf;

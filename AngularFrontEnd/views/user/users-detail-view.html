@@ -56,10 +56,10 @@
 				</tr>
 			</tbody>
 		</table>
-		<span>
-			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedUser.ID)">Delete</button>
-		</span> | 
-		<span><a href="#/users/edit/{{ctrl.SelectedUser.ID}}">Edit</a></span> | 
+		<span ng-if="ctrl.AdminRights">
+			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedUser.ID)">Delete</button> | 
+		</span>
+		<span ng-if="ctrl.AdminRights"><a href="#/users/edit/{{ctrl.SelectedUser.ID}}">Edit</a> | </span>
 		<span><a href="#/users">Back to list</a></span>
 	</div>
 </div>

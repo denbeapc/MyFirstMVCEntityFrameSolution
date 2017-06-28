@@ -71,10 +71,10 @@
 				</tr>
 			</tbody>
 		</table>
-		<span>
-			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedPurchaseRequest.ID)">Delete</button>
-		</span> | 
-		<span><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a></span> |
+		<span ng-if="ctrl.AdminRights">
+			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedPurchaseRequest.ID)">Delete</button> | 
+		</span>
+		<span ng-if="ctrl.AdminRights"><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a> | </span>
 		<span><a href="#/purchaserequests">Back to list</a></span>
 	</div>
 </div>
