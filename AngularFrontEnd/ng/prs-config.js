@@ -139,6 +139,9 @@ function PrsConfig($routeProvider, $locationProvider) {
 		.when('/about', {
 			templateUrl: 'views/about-view.html'
 		})
+		.when('/login', {
+			templateUrl: 'views/login-view.html'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
