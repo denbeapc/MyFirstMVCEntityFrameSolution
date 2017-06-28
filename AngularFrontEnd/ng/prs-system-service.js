@@ -20,6 +20,10 @@ function SystemSvc($http, $filter, $location) {
 		}
 	}
 
+	// TODO: Create a method that checks to see if the purchase request (or really anything)
+	// Matches the active users information/credentials
+	// If it matches, only display info for that user
+
 	self.GetAdminRights = function() {
 		if(self.ActiveUser != undefined) {
 			if(self.ActiveUser.IsAdmin) {

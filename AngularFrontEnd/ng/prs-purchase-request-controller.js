@@ -76,10 +76,14 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 			);
 	}
 
-	self.NewPurchaseRequest = {
-		Status: "New",
-		SubmittedDate: new Date()
-	};
+	if(SystemSvc.GetActiveUser() != undefined) {
+		self.NewPurchaseRequest = {
+			UserID: (SystemSvc.GetActiveUser()).ID,
+			Status: "New",
+			SubmittedDate: new Date()
+		};
+	}
+	
 
 	// JQuery function that adds a new purchase request to the database
 	self.Add = function(purchaserequest) {
