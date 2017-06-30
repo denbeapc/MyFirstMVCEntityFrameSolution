@@ -58,7 +58,9 @@
 		<span ng-if="ctrl.AdminRights">
 			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedProduct.ID)">Delete</button> | 
 		</span>
-		<span ng-if="ctrl.AdminRights"><a href="#/products/edit/ctrl.SelectedProduct.ID">Edit</a> | </span>
+		<span ng-if="ctrl.AdminRights">
+			<a href="#/products/edit/{{ctrl.SelectedProduct.ID}}"><button class="btn btn-info">Edit</button></a> | 
+		</span>
 		<span><a href="#/products">Back to list</a></span>
 	</div>
 </div>

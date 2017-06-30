@@ -15,8 +15,13 @@
 		</div>
 	</div>
 
+	<br />
 	<div class="form-group row">
-		<button class="btn btn-default col-md-offset-3" ng-click="ctrl.Login(ctrl.LoginUser)">Login</button>
-		<label ng-if="ctrl.LabelErrorMessage" style="color: red;">Username/Password combination not valid</label>
+		<button class="btn btn-primary col-md-offset-4 col-md-3" ng-click="ctrl.Login(ctrl.LoginUser)">Login</button>
+	</div>
+	<div ng-if="ctrl.LabelErrorMessage" class="alert alert-danger" role="alert">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span class="sr-only">Error:</span>
+		Username/Password combination not valid
 	</div>
 </div>

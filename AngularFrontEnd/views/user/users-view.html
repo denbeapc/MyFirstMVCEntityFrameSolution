@@ -22,11 +22,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- Angular function ng-repeat executes for however many rows are in the array/object  -->
-				<!-- 
-					ctrl.Users allows the code to access the Users 
-					array/object established in the prs-user-controller class 
-				-->
 				<tr ng-repeat="user in ctrl.Users | filter: ctrl.SearchCriteria">
 					<td><span ng-bind="user.UserName"></span></td>
 					<td ng-if="ctrl.DisplayPassword"><span ng-bind="user.Password"></span></td>
@@ -40,10 +35,12 @@
 					<td><span ng-bind="user.IsReviewer"></span></td>
 					<td><span ng-bind="user.IsAdmin"></span></td>
 					<td>
-						<span ng-if="ctrl.AdminRights">
-							<a href="#/users/edit/{{user.ID}}">Edit</a> | 
-						</span>
-						<span><a href="#/users/detail/{{user.ID}}">Details</a></span>
+						<a class="GlyphLink" title="Edit" ng-if="ctrl.AdminRights" href="#/users/edit/{{user.ID}}">
+							<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+						</a>
+						<a class="GlyphLink" title="Details" href="#/users/detail/{{user.ID}}">
+							<span class="glyphicon glyphicon-list-alt"></span>
+						</a>
 					</td>
 				</tr>
 			</tbody>

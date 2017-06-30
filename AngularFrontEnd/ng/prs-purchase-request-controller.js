@@ -6,6 +6,13 @@ PurchaseRequestCtrl.$inject = ["$http", "$routeParams", "$location", "PurchaseRe
 
 function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc, UserSvc, SystemSvc) {
 	var self = this;
+	self.PrStatus = {
+		New : "NEW",
+		Review: "REVIEW",
+		Approved: "APPROVED",
+		Rejected: "REJECTED"
+	};
+
 	self.PageTitle = "Purchase Request";
 
 	SystemSvc.VerifyUserLogin();
@@ -13,7 +20,15 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 
 	// JQuery function that retrieves a data list of type PurchaseRequests from the database
 	self.GetPurchaseRequests = function() {
-		PurchaseRequestSvc.List()
+		var action;
+		if(self.AdminRights || SystemSvc.GetActiveUser() == undefined) {
+			action = "List";
+		} else {
+			var uId = SystemSvc.GetActiveUser().ID.toString();
+			action = "ListByUser/" + uId;
+		}
+
+		PurchaseRequestSvc.List(action)
 			.then(
 				function(resp) {
 					try {
@@ -49,6 +64,10 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 
 						self.SelectedPurchaseRequest.DateNeeded 
 							= SystemSvc.ConvertToJsonDate(self.SelectedPurchaseRequest.DateNeeded);
+
+						self.UserAccessRights = SystemSvc.GetPurchaseRequestAccess(self.SelectedPurchaseRequest.UserID);
+						self.ReviewRestrictions 
+							= PurchaseRequestSvc.GetReviewRestrictions(self.SelectedPurchaseRequest.UserID);
 					} catch(error) {
 						console.log(error.message);
 					}
@@ -79,8 +98,12 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 	if(SystemSvc.GetActiveUser() != undefined) {
 		self.NewPurchaseRequest = {
 			UserID: (SystemSvc.GetActiveUser()).ID,
-			Status: "New",
-			SubmittedDate: new Date()
+			Status: self.PrStatus.New,
+			DateNeeded: SystemSvc.ConvertToJsonDate(new Date()),
+			SubmittedDate: SystemSvc.ConvertToJsonDate(new Date()),
+			DocsAttached: false,
+			Total: 0.00,
+			DeliveryMode: 'USPS'
 		};
 	}
 	

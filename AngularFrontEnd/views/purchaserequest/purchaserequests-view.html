@@ -13,7 +13,6 @@
 					<td>Justification</td>
 					<td>Date Needed</td>
 					<td>Delivery Mode</td>
-					<td>Docs Attached?</td>
 					<td>Status</td>
 					<td>Total</td>
 					<td></td>
@@ -29,13 +28,18 @@
 					<td><span ng-bind="purchaseRequest.Justification"></span></td>
 					<td><span ng-bind="purchaseRequest.DateNeeded"></span></td>
 					<td><span ng-bind="purchaseRequest.DeliveryMode"></span></td>
-					<td><span ng-bind="purchaseRequest.DocsAttached"></span></td>
 					<td><span ng-bind="purchaseRequest.Status"></span></td>
 					<td>$<span ng-bind="purchaseRequest.Total"></span></td>
 					<td>
-						<span ng-if="ctrl.AdminRights"><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a> | </span>
-						<span><a href="#/purchaserequests/detail/{{purchaseRequest.ID}}">Details</a></span> | 
-						<span><a href="#/purchaserequestlineitems/{{purchaseRequest.ID}}">Lines</a></span>
+						<a class="GlyphLink" title="Edit" href="#/purchaserequests/edit/{{purchaseRequest.ID}}">
+							<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+						</a>
+						<a class="GlyphLink" title="Details" href="#/purchaserequests/detail/{{purchaseRequest.ID}}">
+							<span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+						</a>
+						<a class="GlyphLink" title="Lines" href="#/purchaserequestlineitems/{{purchaseRequest.ID}}">
+							<span class="glyphicon glyphicon-th-list"></span>
+						</a>
 					</td>
 				</tr>
 			</tbody>

@@ -10,7 +10,7 @@ function HomeCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 	var self = this;
 
 	self.WelcomeUser = (SystemSvc.GetActiveUser() != undefined) 
-		? "Welcome " + SystemSvc.GetActiveUser().UserName + "!" 
+		? "Welcome " + SystemSvc.GetActiveUser().FirstName + " " + SystemSvc.GetActiveUser().LastName + "!" 
 		: "Welcome to the Purchase Request System (PRS)"; 
 
 	if(SystemSvc.GetActiveUser() != undefined) {

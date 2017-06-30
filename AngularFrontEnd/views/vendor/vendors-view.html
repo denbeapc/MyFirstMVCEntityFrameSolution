@@ -31,8 +31,12 @@
 					<td><span ng-bind="vendor.Email"></span></td>
 					<td><span ng-bind="vendor.IsRecommended"></span></td>
 					<td>
-						<span ng-if="ctrl.AdminRights"><a href="#/vendors/edit/{{vendor.ID}}">Edit</a> | </span>
-						<span><a href="#/vendors/detail/{{vendor.ID}}">Details</a></span>
+						<a class="GlyphLink" title="Edit" ng-if="ctrl.AdminRights" href="#/vendors/edit/{{vendor.ID}}">
+							<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+						</a>
+						<a class="GlyphLink" title="Details" href="#/vendors/detail/{{vendor.ID}}">
+							<span class="glyphicon glyphicon-list-alt"></span>
+						</a>
 					</td>
 				</tr>
 			</tbody>
