@@ -17,6 +17,7 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 
 	SystemSvc.VerifyUserLogin();
 	self.AdminRights = SystemSvc.GetAdminRights();
+	self.ReviewerRights = SystemSvc.GetReviewerAccess();
 
 	// JQuery function that retrieves a data list of type PurchaseRequests from the database
 	self.GetPurchaseRequests = function() {
@@ -37,6 +38,8 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 						for(var idx in self.PurchaseRequests) {
 							self.PurchaseRequests[idx].DateNeeded 
 								= SystemSvc.ConvertToJsonDate(self.PurchaseRequests[idx].DateNeeded);
+							self.PurchaseRequests[idx].SubmittedDate 
+								= SystemSvc.ConvertToJsonDate(self.PurchaseRequests[idx].SubmittedDate);
 						}
 					} catch(error) {
 						console.log(error.message);
@@ -49,6 +52,32 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 			);
 	}
 	self.GetPurchaseRequests();
+
+	// JQuery function that retrieves a data list of type PurchaseRequests from the database
+	self.GetPurchaseRequestsReadyForReview = function() {
+		PurchaseRequestSvc.ReviewList()
+			.then(
+				function(resp) {
+					try {
+						self.PurchaseRequestsToBeReviewed = resp.data;
+
+						for(var idx in self.PurchaseRequestsToBeReviewed) {
+							self.PurchaseRequestsToBeReviewed[idx].DateNeeded 
+								= SystemSvc.ConvertToJsonDate(self.PurchaseRequestsToBeReviewed[idx].DateNeeded);
+							self.PurchaseRequestsToBeReviewed[idx].SubmittedDate 
+								= SystemSvc.ConvertToJsonDate(self.PurchaseRequestsToBeReviewed[idx].SubmittedDate);
+						}
+					} catch(error) {
+						console.log(error.message);
+					}
+				},
+				function(err) {
+					self.PurchaseRequestsToBeReviewed = [];
+					console.log("[ERROR] ", err);
+				}
+			);
+	}
+	self.GetPurchaseRequestsReadyForReview();
 
 	self.SelectedPurchaseRequestID = $routeParams.id;
 
@@ -64,6 +93,8 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 
 						self.SelectedPurchaseRequest.DateNeeded 
 							= SystemSvc.ConvertToJsonDate(self.SelectedPurchaseRequest.DateNeeded);
+						self.SelectedPurchaseRequest.SubmittedDate 
+							= SystemSvc.ConvertToJsonDate(self.SelectedPurchaseRequest.SubmittedDate);
 
 						self.UserAccessRights = SystemSvc.GetPurchaseRequestAccess(self.SelectedPurchaseRequest.UserID);
 						self.ReviewRestrictions 
@@ -79,11 +110,15 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 	}
 	self.GetPurchaseRequest(self.SelectedPurchaseRequestID)
 
+	self.ReviewPurchaseRequest = function() {
+		self.SelectedPurchaseRequest.Status = self.PrStatus.Review;
+		self.Update(self.SelectedPurchaseRequest);
+	}
+
 	self.DeliveryOptions = [ "USPS", "FedEx", "UPS", "DHL Express" ];
 
 	// JQuery function that updates a specific purchase request from the database given an ID
 	self.Update = function(purchaserequest) {
-		purchaserequest.SubmittedDate = new Date();
 		PurchaseRequestSvc.Change(purchaserequest)
 			.then(
 				function(resp) {

@@ -75,12 +75,12 @@
 			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedPurchaseRequest.ID)">Delete</button> | 
 		</span>
 		<span ng-hide="!ctrl.UserAccessRights">
-			<a class="GlyphLink" href="#/purchaserequests/edit/{{ctrl.purchaseRequest.ID}}">
+			<a class="GlyphLink" href="#/purchaserequests/edit/{{ctrl.SelectedPurchaseRequest.ID}}">
 				<button class="btn btn-info">Edit</button>
 			</a> | 
 		</span>
 		<span ng-hide="!ctrl.UserAccessRights">
-			<button class="btn btn-warning">Review</button> | 
+			<button class="btn btn-warning" ng-click="ctrl.ReviewPurchaseRequest()">Review</button> | 
 		</span>
 		<span><a href="#/purchaserequests">Back to list</a></span>
 	</div>

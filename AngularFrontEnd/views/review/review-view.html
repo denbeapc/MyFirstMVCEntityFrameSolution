@@ -1,0 +1,47 @@
+<div ng-if="ctrl.ReviewerRights">
+	<div>
+		<span id="PageTitle">Review <span ng-bind="ctrl.PageTitle"></span>s</span><br />
+		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>User</td>
+					<td>Description</td>
+					<td>Justification</td>
+					<td>Date Needed</td>
+					<td>Date Submitted</td>
+					<td>Delivery Mode</td>
+					<td>Status</td>
+					<td>Total</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="purchaseRequest in ctrl.PurchaseRequestsToBeReviewed | filter: ctrl.SearchCriteria">
+					<td>
+						<span ng-bind="purchaseRequest.User.FirstName"></span>
+						<span ng-bind="purchaseRequest.User.LastName"></span>
+					</td>
+					<td><span ng-bind="purchaseRequest.Description"></span></td>
+					<td><span ng-bind="purchaseRequest.Justification"></span></td>
+					<td><span ng-bind="purchaseRequest.DateNeeded"></span></td>
+					<td><span ng-bind="purchaseRequest.SubmittedDate"></span></td>
+					<td><span ng-bind="purchaseRequest.DeliveryMode"></span></td>
+					<td><span ng-bind="purchaseRequest.Status"></span></td>
+					<td>$<span ng-bind="purchaseRequest.Total"></span></td>
+					<td>
+						<button class="btn btn-warning">Review</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div ng-if="!ctrl.ReviewerRights" class="alert alert-danger" role="alert">
+	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	<span class="sr-only">Error:</span>
+	You must be a verified reviewer to access this domain!
+</div>

@@ -2,10 +2,8 @@ angular
 	.module("PrsApp")
 	.controller("HomeCtrl", HomeCtrl);
 
-// Uses (injects) the libs $http, $routeParams, $location, and the User Service
 HomeCtrl.$inject = ["$http", "$routeParams", "$location", "UserSvc", "SystemSvc"];
 
-// Passes the variables of types $http, $routeParams, $location, and the User Service
 function HomeCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 	var self = this;
 

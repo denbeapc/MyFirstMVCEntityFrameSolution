@@ -12,6 +12,9 @@ function Svc($http, SystemSvc) {
 	self.List = function(action) {
 		return $http.get(url + action);
 	}
+	self.ReviewList = function(action) {
+		return $http.get(url + "ReadyToReviewList");
+	}
 	self.Get = function(id) {
 		return $http.get(url + "Get/" + id);
 	}

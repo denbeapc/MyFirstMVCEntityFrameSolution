@@ -90,6 +90,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 			.then(
 				function(resp) {
 					$location.path("/purchaserequestlineitems/" + purchaserequestlineitem.PurchaseRequestID);
+					makeActive(5);
 				},
 				function(err) {
 					console.log("ERROR:", err);
@@ -107,6 +108,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 			.then(
 				function(resp) {
 					$location.path("/purchaserequestlineitems/" + purchaserequestlineitem.PurchaseRequestID);
+					makeActive(5);
 				},
 				function(err) {
 					console.log("ERROR:", err);

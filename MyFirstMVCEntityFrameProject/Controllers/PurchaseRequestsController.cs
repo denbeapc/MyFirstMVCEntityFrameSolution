@@ -33,6 +33,13 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         }
 
         // -------------- IMPORTANT -------------- //
+        // RETURNS a list of the PurchaseRequestLineItems that match a PurchaseRequest ID to the front end (JQuery) in Json formatting
+        public ActionResult ReadyToReviewList() {
+            var items = db.PurchaseRequests.Where(pr => pr.Status != "NEW").ToList();
+            return new JsonNetResult { Data = items };
+        }
+
+        // -------------- IMPORTANT -------------- //
         // GETS a specific PurchaseRequest by ID and returns it to the front end (JQuery) in Json formatting
         public ActionResult Get(int? id) {
             //return Json(db.PurchaseRequests.Find(id), JsonRequestBehavior.AllowGet);
