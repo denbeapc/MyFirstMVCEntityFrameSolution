@@ -37,3 +37,7 @@ thead tr td {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
+
+a.GlyphLink {
+	text-decoration: none;
+}

@@ -9,8 +9,8 @@ function Svc($http, SystemSvc) {
 	var ctrlr = "/PurchaseRequests/";
 	var url = SystemSvc.AjaxUrl + ctrlr;
 
-	self.List = function() {
-		return $http.get(url + "List");
+	self.List = function(action) {
+		return $http.get(url + action);
 	}
 	self.Get = function(id) {
 		return $http.get(url + "Get/" + id);
@@ -23,5 +23,18 @@ function Svc($http, SystemSvc) {
 	}
 	self.Remove = function(id) {
 		return $http.post(url + "Remove/" + id);
+	}
+
+	self.GetReviewRestrictions = function(id) {
+		var user = SystemSvc.GetActiveUser();
+		if(user != undefined) {
+			if(user.IsAdmin && user.ID != id) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		return false;
 	}
 };

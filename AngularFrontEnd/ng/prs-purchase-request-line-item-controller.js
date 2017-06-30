@@ -2,41 +2,19 @@ angular
 	.module("PrsApp")
 	.controller("PurchaseRequestLineItemCtrl", PurchaseRequestLineItemCtrl);
 
-PurchaseRequestLineItemCtrl.$inject = ["$http", "$routeParams", "$location", "$route",
+PurchaseRequestLineItemCtrl.$inject = ["$http", "$routeParams", "$location", "$route", "SystemSvc", 
 										"PurchaseRequestLineItemSvc", "PurchaseRequestSvc", "ProductSvc"];
 
-function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route,
+function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, SystemSvc, 
 										PurchaseRequestLineItemSvc, PurchaseRequestSvc, ProductSvc) {
 	var self = this;
 	self.PageTitle = "Line Items";
 
+	SystemSvc.VerifyUserLogin();
+	self.AdminRights = SystemSvc.GetAdminRights();
+
 	self.SelectedPurchaseRequestLineItemID = $routeParams.id;
 	self.SelectedPurchaseRequestID = $routeParams.prId;
-
-	self.PurchaseRequests = [];
-
-	self.GetPurchaseRequests = function() {
-		PurchaseRequestSvc.List()
-			.then(
-				function(resp) {
-					try {
-						self.PurchaseRequests = resp.data;
-
-						for(var idx in self.PurchaseRequests) {
-							var pr = self.PurchaseRequests[idx];
-							pr.DateNeeded = Number(pr.DateNeeded.replace('/Date(','').replace(')/',''));
-						}
-					} catch(error) {
-						console.log(error.message);
-					}
-				},
-				function(err) {
-					self.PurchaseRequests = [];
-					console.log("[ERROR] ", err);
-				}
-			);
-	}
-	self.GetPurchaseRequests();
 
 	self.GetPurchaseRequest = function(id) {
 		if(id == undefined)
@@ -47,8 +25,8 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route,
 					try {
 						self.SelectedPurchaseRequest = resp.data;
 
-						self.SelectedPurchaseRequest.DateNeeded
-							= Number(self.SelectedPurchaseRequest.DateNeeded.replace('/Date(','').replace(')/',''));
+						self.SelectedPurchaseRequest.DateNeeded 
+							= SystemSvc.ConvertToJsonDate(self.SelectedPurchaseRequest.DateNeeded);
 					} catch(error) {
 						console.log(error.message);
 					}

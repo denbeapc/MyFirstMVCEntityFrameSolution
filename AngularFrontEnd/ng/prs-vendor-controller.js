@@ -2,11 +2,14 @@ angular
 	.module("PrsApp")
 	.controller("VendorCtrl", VendorCtrl);
 
-VendorCtrl.$inject = ["$http", "$routeParams", "$location", "VendorSvc"];
+VendorCtrl.$inject = ["$http", "$routeParams", "$location", "VendorSvc", "SystemSvc"];
 
-function VendorCtrl($http, $routeParams, $location, VendorSvc) {
+function VendorCtrl($http, $routeParams, $location, VendorSvc, SystemSvc) {
 	var self = this;
 	self.PageTitle = "Vendor";
+
+	SystemSvc.VerifyUserLogin();
+	self.AdminRights = SystemSvc.GetAdminRights();
 
 	// JQuery function that retrieves a data list of type Vendor from the database
 	VendorSvc.List()

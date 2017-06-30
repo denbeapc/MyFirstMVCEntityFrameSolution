@@ -23,6 +23,6 @@
 	</div>
 
 	<div class="col-md-offset-3">
-		<button class="btn btn-default" ng-click="ctrl.Add(ctrl.NewPurchaseRequestLineItem)">Add</button>
+		<button ng-hide="!ctrl.AdminRights" class="btn btn-default" ng-click="ctrl.Add(ctrl.NewPurchaseRequestLineItem)">Add</button>
 	</div>
 </div>

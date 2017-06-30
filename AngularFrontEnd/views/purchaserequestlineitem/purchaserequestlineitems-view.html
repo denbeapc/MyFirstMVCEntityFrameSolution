@@ -1,7 +1,9 @@
 <div>
 	<div>
 		<span id="PageTitle">List of Purchase Request <span ng-bind="ctrl.PageTitle"></span></span><br />
-		<a href="#/purchaserequestlineitems/add/{{ctrl.SelectedPurchaseRequest.ID}}">Add New Line Item</a> - 
+		<span ng-if="ctrl.AdminRights">
+			<a href="#/purchaserequestlineitems/add/{{ctrl.SelectedPurchaseRequest.ID}}">Add New Line Item</a> - 
+		</span>
 		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
 	</div>
 	<div>
@@ -32,10 +34,12 @@
 					<td><span ng-bind="lineItem.Product.Name"></span></td>
 					<td><span ng-bind="lineItem.Quantity"></span></td>
 					<td>
-						<span>
-							<button class="btn btn-danger" ng-click="ctrl.Delete(lineItem.ID)">Delete</button>
-						</span> | 
-						<span><a href="#/purchaserequestlineitems/edit/{{lineItem.ID}}">Edit</a></span>
+						<span ng-if="ctrl.AdminRights">
+							<button class="btn btn-danger" ng-click="ctrl.Delete(lineItem.ID)">Delete</button> | 
+						</span>
+						<a ng-if="ctrl.AdminRights" href="#/purchaserequestlineitems/edit/{{lineItem.ID}}">
+							<button class="btn btn-info">Edit</button>
+						</a>
 					</td>
 				</tr>
 			</tbody>

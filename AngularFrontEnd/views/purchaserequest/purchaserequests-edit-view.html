@@ -1,4 +1,4 @@
-<div style="width: 45%;">
+<div style="width: 45%;" ng-hide="!ctrl.UserAccessRights">
 	<div>
 		<span id="PageTitle">Edit <span ng-bind="ctrl.PageTitle"></span></span>
 	</div>
@@ -8,7 +8,7 @@
 
 		<div class="col-md-9">
 			<select class="form-control" ng-model="ctrl.SelectedPurchaseRequest.UserID" id="purchaserequest-user"
-			ng-options="user.ID as user.FirstName + ' ' + user.LastName for user in ctrl.Users">
+			ng-options="user.ID as user.FirstName + ' ' + user.LastName for user in ctrl.Users" ng-disabled="!ctrl.AdminRights">
 			</select> 
 		</div>
 	</div>
@@ -69,6 +69,6 @@
 	</div>
 
 	<div class="col-md-offset-3">
-		<button class="btn btn-default" ng-click="ctrl.Update(ctrl.SelectedPurchaseRequest)">Save</button>
+		<button class="btn" ng-click="ctrl.Update(ctrl.SelectedPurchaseRequest)">Save</button>
 	</div>
 </div>

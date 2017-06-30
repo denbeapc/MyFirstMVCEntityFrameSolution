@@ -1,4 +1,4 @@
-<div>
+<div ng-hide="!ctrl.UserAccessRights">
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span>
 	</div>
@@ -71,10 +71,17 @@
 				</tr>
 			</tbody>
 		</table>
-		<span>
-			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedPurchaseRequest.ID)">Delete</button>
-		</span> | 
-		<span><a href="#/purchaserequests/edit/{{purchaseRequest.ID}}">Edit</a></span> |
+		<span ng-hide="!ctrl.UserAccessRights">
+			<button class="btn btn-danger" ng-click="ctrl.Delete(ctrl.SelectedPurchaseRequest.ID)">Delete</button> | 
+		</span>
+		<span ng-hide="!ctrl.UserAccessRights">
+			<a class="GlyphLink" href="#/purchaserequests/edit/{{ctrl.purchaseRequest.ID}}">
+				<button class="btn btn-info">Edit</button>
+			</a> | 
+		</span>
+		<span ng-hide="!ctrl.UserAccessRights">
+			<button class="btn btn-warning">Review</button> | 
+		</span>
 		<span><a href="#/purchaserequests">Back to list</a></span>
 	</div>
 </div>

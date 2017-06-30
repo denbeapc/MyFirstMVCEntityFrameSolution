@@ -1,9 +1,11 @@
 <div>
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
-		<a href="#/users/add">Create New</a> - 
-		<label>Search: <input ng-model="ctrl.SearchCriteria"></label> - 
-		<label><button ng-click="ctrl.ToggleDisplayPassword()">Toggle Display Passwords</button></label>
+		<span ng-if="ctrl.AdminRights"><a href="#/users/add">Create New</a> - </span>
+		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
+		<span ng-if="ctrl.AdminRights">
+			 - <button ng-click="ctrl.ToggleDisplayPassword()">Toggle Display Passwords</button>
+		</span>
 	</div>
 	<div>
 		<table class="table">
@@ -20,11 +22,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- Angular function ng-repeat executes for however many rows are in the array/object  -->
-				<!-- 
-					ctrl.Users allows the code to access the Users 
-					array/object established in the prs-user-controller class 
-				-->
 				<tr ng-repeat="user in ctrl.Users | filter: ctrl.SearchCriteria">
 					<td><span ng-bind="user.UserName"></span></td>
 					<td ng-if="ctrl.DisplayPassword"><span ng-bind="user.Password"></span></td>
@@ -38,8 +35,12 @@
 					<td><span ng-bind="user.IsReviewer"></span></td>
 					<td><span ng-bind="user.IsAdmin"></span></td>
 					<td>
-						<span><a href="#/users/edit/{{user.ID}}">Edit</a></span> | 
-						<span><a href="#/users/detail/{{user.ID}}">Details</a></span>
+						<a class="GlyphLink" title="Edit" ng-if="ctrl.AdminRights" href="#/users/edit/{{user.ID}}">
+							<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+						</a>
+						<a class="GlyphLink" title="Details" href="#/users/detail/{{user.ID}}">
+							<span class="glyphicon glyphicon-list-alt"></span>
+						</a>
 					</td>
 				</tr>
 			</tbody>

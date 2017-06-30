@@ -3,14 +3,16 @@ angular
 	.controller("UserCtrl", UserCtrl);
 
 // Uses (injects) the libs $http, $routeParams, $location, and the User Service
-UserCtrl.$inject = ["$http", "$routeParams", "$location", "UserSvc"];
+UserCtrl.$inject = ["$http", "$routeParams", "$location", "UserSvc", "SystemSvc"];
 
 // Passes the variables of types $http, $routeParams, $location, and the User Service
-function UserCtrl($http, $routeParams, $location, UserSvc) {
+function UserCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 	// Sets a variable self equal to this
 	// This has security issues and can be altered by outside functions
 	var self = this;
 	self.PageTitle = "User";
+
+	SystemSvc.VerifyUserLogin();
 
 	// JQuery function that retrieves a data list of type User from the database
 	UserSvc.List()
@@ -37,6 +39,8 @@ function UserCtrl($http, $routeParams, $location, UserSvc) {
 				console.log("[ERROR] ", err);
 			}
 		);
+
+	self.AdminRights = SystemSvc.GetAdminRights();
 
 	self.ShowPassword = function(tf) {
 		self.DisplayPassword = tf;

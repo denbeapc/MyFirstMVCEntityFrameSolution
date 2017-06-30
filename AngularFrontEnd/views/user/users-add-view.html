@@ -75,6 +75,6 @@
 	</div>
 
 	<div class="col-md-offset-3">
-		<button class="btn btn-default" ng-click="ctrl.Add(ctrl.NewUser)">Add</button>
+		<button class="btn btn-default" ng-hide="!ctrl.AdminRights" ng-click="ctrl.Add(ctrl.NewUser)">Add</button>
 	</div>
 </div>
