@@ -16,6 +16,23 @@ namespace MyFirstMVCEntityFrameProject.Controllers
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
 
         // -------------- IMPORTANT -------------- //
+        // 
+        public ActionResult CreatePurchaseOrder(int? id) {
+            var purchaseOrder = db.PurchaseRequestLineItems.Where(li => li.Product.VendorID == id).ToList();
+
+            decimal Subtotal = 0; decimal Tax = 0; decimal Shipping = 0; decimal Total = 0;
+            for(int idx = 0; idx < purchaseOrder.Count; idx++) {
+                Subtotal += purchaseOrder[idx].LineTotal;
+            }
+            Tax = Subtotal * Convert.ToDecimal(0.1);
+            Shipping = Subtotal * Convert.ToDecimal(0.05);
+            Total = Tax + Shipping + Subtotal;
+            var poCosts = new { Subtotal, Tax, Shipping, Total };
+
+            return Json(new { purchaseOrder, poCosts }, JsonRequestBehavior.AllowGet);
+        }
+
+        // -------------- IMPORTANT -------------- //
         // RETURNS a list of the Vendors to the front end (JQuery) in Json formatting
         public ActionResult List() {
             return Json(db.Vendors.ToList(), JsonRequestBehavior.AllowGet);

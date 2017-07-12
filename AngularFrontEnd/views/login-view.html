@@ -1,27 +1,34 @@
-<div class="jumbotron" style="padding: 30px; margin: 10px; border: 1px lightgray solid;">
-	<div class="form-group row">
-		<label for="login-username" class="col-md-3 control-label" style="text-align: right;">Username </label>
-		
-		<div class="col-md-6">
-			<input class="form-control" ng-model="ctrl.LoginUser.UserName" id="login-username" type="text">
+<div class="jumbotron" style="padding: 30px; background-color: #f8f8f8;">
+	<div ng-if="ctrl.LoggedIn"  class="form-group row">
+		<button class="btn btn-primary col-md-offset-4 col-md-3" ng-click="ctrl.Logout()">Logout</button>
+	</div>
+
+	<div ng-if="!ctrl.LoggedIn">
+		<div class="form-group row">
+			<label for="login-username" class="col-md-3 control-label" style="text-align: right;">Username </label>
+			
+			<div class="col-md-6">
+				<input class="form-control" ng-model="ctrl.LoginUser.UserName" id="login-username" type="text">
+			</div>
 		</div>
-	</div>
 
-	<div class="form-group row">
-		<label for="login-password" class="col-md-3 control-label" style="text-align: right;">Password </label>
+		<div class="form-group row">
+			<label for="login-password" class="col-md-3 control-label" style="text-align: right;">Password </label>
 
-		<div class="col-md-6">
-			<input class="form-control" ng-model="ctrl.LoginUser.Password" id="login-password" type="text">
+			<div class="col-md-6">
+				<input class="form-control" ng-model="ctrl.LoginUser.Password" id="login-password" type="password">
+			</div>
 		</div>
-	</div>
 
-	<br />
-	<div class="form-group row">
-		<button class="btn btn-primary col-md-offset-4 col-md-3" ng-click="ctrl.Login(ctrl.LoginUser)">Login</button>
-	</div>
-	<div ng-if="ctrl.LabelErrorMessage" class="alert alert-danger" role="alert">
-		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-		<span class="sr-only">Error:</span>
-		Username/Password combination not valid
+		<br />
+		<div class="form-group row">
+			<button class="btn btn-primary col-md-offset-4 col-md-3" ng-click="ctrl.Login(ctrl.LoginUser)">Login</button>
+		</div>
+
+		<div ng-if="ctrl.LabelErrorMessage" class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span>
+			Username/Password combination not valid
+		</div>
 	</div>
 </div>

@@ -2,11 +2,9 @@ angular
 	.module("PrsApp")
 	.controller("AuthenticationCtrl", AuthenticationCtrl);
 
-// Uses (injects) the libs $http, $routeParams, $location, and the User Service
-AuthenticationCtrl.$inject = ["$http", "$routeParams", "$location", "UserSvc", "SystemSvc"];
+AuthenticationCtrl.$inject = ["$http", "$routeParams", "$location", "$route", "UserSvc", "SystemSvc"];
 
-// Passes the variables of types $http, $routeParams, $location, and the User Service
-function AuthenticationCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
+function AuthenticationCtrl($http, $routeParams, $location, $route, UserSvc, SystemSvc) {
 	var self = this;
 
 	UserSvc.List()
@@ -20,6 +18,11 @@ function AuthenticationCtrl($http, $routeParams, $location, UserSvc, SystemSvc) 
 			}
 		);
 
+	self.LoggedIn = SystemSvc.CheckIfUserLoggedIn();
+	if(SystemSvc.GetActiveUser() != undefined) {
+		self.ActiveUser = SystemSvc.GetActiveUser();
+	}
+
 	self.LoginUser;
 	self.Login = function(user) {
 		SystemSvc.SetActiveUser(undefined);
@@ -29,6 +32,7 @@ function AuthenticationCtrl($http, $routeParams, $location, UserSvc, SystemSvc) 
 			if(user.UserName == self.Users[x].UserName && user.Password == self.Users[x].Password) {
 				SystemSvc.SetActiveUser(self.Users[x]);
 				$location.path("/");
+				makeActive(1);
 				break;
 			} else {
 				SystemSvc.SetActiveUser(undefined);
@@ -36,7 +40,13 @@ function AuthenticationCtrl($http, $routeParams, $location, UserSvc, SystemSvc) 
 		}
 
 		if(SystemSvc.GetActiveUser() == undefined) {
+			clearLoginInputs();
 			self.LabelErrorMessage = true;
 		}
+	}
+
+	self.Logout = function() {
+		SystemSvc.SetActiveUser(undefined);
+		$route.reload();
 	}
 }

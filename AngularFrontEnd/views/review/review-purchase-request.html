@@ -1,0 +1,52 @@
+<div ng-if="ctrl.ReviewerRights">
+	<div>
+		<span id="PageTitle">Reviewing 
+			<span ng-bind="ctrl.SelectedPurchaseRequest.User.FirstName + ' ' + ctrl.SelectedPurchaseRequest.User.LastName"></span>'s Purchase Request
+		</span><br />
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr><th>ID</th><th>Description</th><th>Justification</th><th>Total</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><span ng-bind="ctrl.SelectedPurchaseRequest.ID"></span></td>
+					<td><span ng-bind="ctrl.SelectedPurchaseRequest.Description"></span></td>
+					<td><span ng-bind="ctrl.SelectedPurchaseRequest.Justification"></span></td>
+					<td>$<span ng-bind="ctrl.SelectedPurchaseRequest.Total"></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Product</th>
+					<th>Quantity</th>
+					<th>Cost</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="lineItem in ctrl.PurchaseRequestLineItems">
+					<td><span ng-bind="lineItem.Product.Name"></span></td>
+					<td><span ng-bind="lineItem.Quantity"></span></td>
+					<td>$<span ng-bind="{{lineItem.Product.Price * lineItem.Quantity | number: 2}}"></span></td>
+				</tr>
+			</tbody>
+		</table>
+		<span ng-if="ctrl.ReviewerRights">
+			<button class="btn btn-success" ng-click="ctrl.Approve()">Approve</button>
+		</span>
+		<span ng-if="ctrl.ReviewerRights">
+			<button class="btn btn-danger" ng-click="ctrl.Reject()">Reject</button>
+		</span>
+	</div>
+</div>
+
+<div ng-if="!ctrl.ReviewerRights" class="alert alert-danger" role="alert">
+	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	<span class="sr-only">Error:</span>
+	You must be a verified reviewer to access this domain!
+</div>

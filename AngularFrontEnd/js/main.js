@@ -1,7 +1,7 @@
 // $().ready(function() {
 
 // });
-
+var paths = [];
 function makeActive(id) {
 	$('#homeTab').prop('class', '');
 	$('#usersTab').prop('class', '');
@@ -10,6 +10,7 @@ function makeActive(id) {
 	$('#requestsTab').prop('class', '');
 	$('#reviewTab').prop('class', '');
 	$('#aboutTab').prop('class', '');
+	$('#loginTab').prop('class', '');
 	
 	switch(id) {
 		case 1:
@@ -33,5 +34,12 @@ function makeActive(id) {
 		case 7:
 			$('#aboutTab').prop('class', 'active');
 			break;
+		case 8:
+			$('#loginTab').prop('class', 'active');
 	}
+}
+
+function clearLoginInputs() {
+	$('#login-username').val('');
+	$('#login-password').val('');
 }

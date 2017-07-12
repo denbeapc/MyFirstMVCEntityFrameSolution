@@ -1,5 +1,5 @@
 body {
-	
+	background-color: #c8c8c8;
 }
 
 table {
@@ -27,8 +27,24 @@ thead tr td {
 }
 
 #View {
-	margin-left: 10px;
-	margin-right: 10px;
+	margin-left: 30px;
+	margin-right: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+
+	background-color: #f8f8f8;
+
+	border-radius: 7px;
+}
+
+#Footer {
+	margin-left: 30px;
+	margin-right: 30px;
 	margin-top: 10px;
 	margin-bottom: 10px;
 
@@ -36,8 +52,35 @@ thead tr td {
 	padding-right: 30px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+
+	background-color: #f8f8f8;
+
+	border-radius: 7px;
+}
+
+#RevealPasswordBtn {
+	cursor: pointer;
 }
 
 a.GlyphLink {
 	text-decoration: none;
+}
+
+#homecontent {
+	/*width: 80%;*/
+	margin: 0 auto;
+}
+
+#homecontentleft, #homecontentright {
+	display: inline-block;
+	vertical-align: text-top;
+}
+
+#homecontentleft {
+	width: 65%;
+	margin-right: 35px;
+}
+
+#homecontentright {
+	width: 30%;
 }

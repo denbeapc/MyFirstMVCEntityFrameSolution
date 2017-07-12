@@ -7,15 +7,15 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<td>User</td>
-					<td>Description</td>
-					<td>Justification</td>
-					<td>Date Needed</td>
-					<td>Date Submitted</td>
-					<td>Delivery Mode</td>
-					<td>Status</td>
-					<td>Total</td>
-					<td></td>
+					<th>User</th>
+					<th>Description</th>
+					<th>Justification</th>
+					<th>Date Needed</th>
+					<th>Date Submitted</th>
+					<th>Delivery Mode</th>
+					<th>Status</th>
+					<th>Total</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,7 +32,9 @@
 					<td><span ng-bind="purchaseRequest.Status"></span></td>
 					<td>$<span ng-bind="purchaseRequest.Total"></span></td>
 					<td>
-						<button class="btn btn-warning">Review</button>
+						<a class="GlyphLink" href="#/review/{{purchaseRequest.ID}}">
+							<button class="btn btn-warning">Review</button>
+						</a>
 					</td>
 				</tr>
 			</tbody>

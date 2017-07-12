@@ -17,6 +17,15 @@ function SystemSvc($http, $filter, $location, $route) {
 	self.VerifyUserLogin = function() {
 		if(self.ActiveUser == undefined) {
 			$location.path("/login");
+			makeActive(8);
+		}
+	}
+
+	self.CheckIfUserLoggedIn = function() {
+		if(self.ActiveUser != undefined) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -54,6 +63,10 @@ function SystemSvc($http, $filter, $location, $route) {
 		}
 
 		return false;
+	}
+
+	self.MadePurchaseFromVendor = function() {
+		
 	}
 	
 	self.AjaxUrl = "http://localhost:63409";

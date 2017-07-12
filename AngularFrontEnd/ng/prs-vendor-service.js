@@ -24,4 +24,7 @@ function Svc($http, SystemSvc) {
 	self.Remove = function(id) {
 		return $http.post(url + "Remove/" + id);
 	}
+	self.CreatePurchaseOrder = function(id) {
+		return $http.post(url + "CreatePurchaseOrder/" + id);
+	}
 };

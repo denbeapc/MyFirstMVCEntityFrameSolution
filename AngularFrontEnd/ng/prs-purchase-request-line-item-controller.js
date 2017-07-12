@@ -12,6 +12,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 
 	SystemSvc.VerifyUserLogin();
 	self.AdminRights = SystemSvc.GetAdminRights();
+	self.AccessRights = true;
 
 	self.SelectedPurchaseRequestLineItemID = $routeParams.id;
 	self.SelectedPurchaseRequestID = $routeParams.prId;
@@ -27,6 +28,8 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 
 						self.SelectedPurchaseRequest.DateNeeded 
 							= SystemSvc.ConvertToJsonDate(self.SelectedPurchaseRequest.DateNeeded);
+
+						self.AccessRights = SystemSvc.GetPurchaseRequestAccess(self.SelectedPurchaseRequest.UserID);
 					} catch(error) {
 						console.log(error.message);
 					}
@@ -76,6 +79,10 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 			.then(
 				function(resp) {
 					self.SelectedPurchaseRequestLineItem = resp.data;
+
+					self.AccessRights = SystemSvc.GetPurchaseRequestAccess(
+						self.SelectedPurchaseRequestLineItem.PurchaseRequest.UserID
+					);
 				},
 				function(err) {
 					console.log("[ERROR] ", err);

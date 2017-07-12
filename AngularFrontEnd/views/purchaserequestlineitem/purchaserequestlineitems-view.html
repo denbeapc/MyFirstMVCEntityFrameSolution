@@ -1,7 +1,7 @@
-<div>
+<div ng-if="ctrl.AccessRights">
 	<div>
 		<span id="PageTitle">List of Purchase Request <span ng-bind="ctrl.PageTitle"></span></span><br />
-		<span ng-if="ctrl.AdminRights">
+		<span>
 			<a href="#/purchaserequestlineitems/add/{{ctrl.SelectedPurchaseRequest.ID}}">Add New Line Item</a> - 
 		</span>
 		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
@@ -24,9 +24,9 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<td>Product</td>
-					<td>Quantity</td>
-					<td></td>
+					<th>Product</th>
+					<th>Quantity</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,10 +34,10 @@
 					<td><span ng-bind="lineItem.Product.Name"></span></td>
 					<td><span ng-bind="lineItem.Quantity"></span></td>
 					<td>
-						<span ng-if="ctrl.AdminRights">
+						<span>
 							<button class="btn btn-danger" ng-click="ctrl.Delete(lineItem.ID)">Delete</button> | 
 						</span>
-						<a ng-if="ctrl.AdminRights" href="#/purchaserequestlineitems/edit/{{lineItem.ID}}">
+						<a href="#/purchaserequestlineitems/edit/{{lineItem.ID}}">
 							<button class="btn btn-info">Edit</button>
 						</a>
 					</td>
@@ -45,4 +45,10 @@
 			</tbody>
 		</table>
 	</div>
+</div>
+
+<div ng-if="!ctrl.AccessRights" class="alert alert-danger" role="alert">
+	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	<span class="sr-only">Error:</span>
+	You do not have access to this purchase request!
 </div>

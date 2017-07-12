@@ -1,9 +1,41 @@
-<div>
-	<span id="PageTitle" ng-bind="ctrl.WelcomeUser"></span><br />
+<div class="jumbotron" style="border-bottom: 4px #c8c8c8 solid; background-color: #f8f8f8; text-align: center;">
+	<span id="PageTitle" ng-bind="ctrl.WelcomeUser" style="font-size: 48px;"></span><br />
 	<span ng-if="!ctrl.LoggedIn">
-		<a href="/#/login"><button class="btn btn-default">Login</button></a>
+		<a href="/#/login"><button class="btn btn-primary" onclick="makeActive(8)">Login</button></a>
 	</span>
-	<span ng-if="ctrl.LoggedIn">
-		<a href="/#/login"><button class="btn btn-default" ng-click="ctrl.Logout()">Logout</button></a>
-	</span>
+</div>
+<div id='homecontent'>
+	<div id='homecontentleft'>
+		<h2>Bootcamp Capstone Project</h2>
+		<p>The Purchase Request System is a capstone project for the students of the Max Technical Training .NET and Java bootcamps. It is designed as a real enterprise level, full-stack application that uses all the technology taught in the bootcamp. The application is a web application with a full SQL database on the back-end. See the technology section for a list of all the software used in the application.</p>
+		<h2>Description</h2>
+		<p>The Purchase Request System (PRS) is an application that provides users with the ability to request items they need. Each request can contain multiple different lines that specify the product and the quantity of that product.</p>
+		<p>Every user is required to log into the system with a user name and password. Users can be identified optionally as reviewers and/or administrators.</p>
+		<p> Any user can create a purchase request, add products to that request, and mark the purchase request ready for review. Once set to review, a user identified as a reviewer may review the purchase request and either accept or reject the purchase request. If rejected, the original user can revise the purchase request and set it to be reviewed again. A reviewer may not review their own purchase requests.</p>
+		<p>Only users identified as administrators may maintain the users, vendors, and products.</p>
+		<p>To satisfy the approved purchase request, the system provides capabilities to create purchase orders to vendors. This function selects a vendor from the list of vendors and reviews the approved purchase requests that include products from that vendor. The total number of each product approved for purchase request is added to the purchase order. After all the vendor's products to be purchased are included on the purchase order, the price and quantity is used to create a line item total and all lines are added to create a subtotal. Then a ten percent (10%) tax is added based on the subtotal along with a five percent (5%) shipping fee based on the subtotal to calculate the final total of the purchase order.</p>
+		<p></p>
+	</div>
+	<div id='homecontentright'>
+		<h2>Technology</h2>
+		<h4>Front-end</h4>
+		<ul>
+			<li>AngularJS v1.x</li>
+			<li>HTML/CSS</li>
+			<li>Javascript</li>
+			<li>Bootstrap</li>
+			<li>jQuery</li>
+		</ul>
+		<h4>Back-end</h4>
+		<ul>
+			<li>WebAPI</li>
+			<li>C#.Net</li>
+			<li>MVC 5</li>
+			<li>EntityFramework 6</li>
+		</ul>
+		<h4>Database</h4>
+		<ul>
+			<li>SQL Server</li>
+		</ul>
+	</div>
 </div>

@@ -44,6 +44,11 @@ function UserCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 
 	self.ShowPassword = function(tf) {
 		self.DisplayPassword = tf;
+		if(!self.DisplayPassword) {
+			self.GlyphType = "Show";
+		} else {
+			self.BtnText = "Hide";
+		}
 	}
 	self.ShowPassword(false);
 
@@ -72,7 +77,11 @@ function UserCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 		UserSvc.Add(user)
 			.then(
 				function(resp) {
-					$location.path("/users");
+					if(user.FirstName == "Taneli" && user.LastName == "Armanto") {
+						$location.path("/snake");
+					} else {
+						$location.path("/users");
+					}
 				},
 				function(err) {
 					console.log("ERROR:", err);
