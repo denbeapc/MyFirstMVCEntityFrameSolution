@@ -60,7 +60,7 @@
 		<label for="user-reviewer" class="col-md-3 control-label" style="text-align: right;">Is Reviewer?</label>
 
 		<div class="col-md-2">
-			<input class="form-control" type="checkbox"
+			<input class="form-control" type="checkbox" ng-disabled="!ctrl.AdminRights"
 			ng-model="ctrl.NewUser.IsReviewer" id="user-reviewer">
 		</div>
 	</div>
@@ -69,7 +69,7 @@
 		<label for="user-admin" class="col-md-3 control-label" style="text-align: right;">Is Admin?</label>
 
 		<div class="col-md-2">
-			<input class="form-control" type="checkbox"
+			<input class="form-control" type="checkbox" ng-disabled="!ctrl.AdminRights"
 			ng-model="ctrl.NewUser.IsAdmin" id="user-admin">
 		</div>
 	</div>

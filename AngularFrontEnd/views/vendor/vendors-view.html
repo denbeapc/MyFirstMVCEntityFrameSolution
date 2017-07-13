@@ -8,13 +8,13 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<td>Code</td>
-					<td>Name</td>
-					<td>Address</td>
-					<td>Phone</td>
-					<td>Email</td>
-					<td>Is Recommended?</td>
-					<td></td>
+					<th>Code</th>
+					<th>Name</th>
+					<th>Address</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Is Recommended?</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,7 +35,10 @@
 							<span class="glyphicon glyphicon-pencil"></span>&nbsp;
 						</a>
 						<a class="GlyphLink" title="Details" href="#/vendors/detail/{{vendor.ID}}">
-							<span class="glyphicon glyphicon-list-alt"></span>
+							<span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+						</a>
+						<a class="GlyphLink" title="Purchase Order" ng-if="ctrl.AdminRights" href="#/purchaseOrder/po/{{vendor.ID}}">
+							<span class="glyphicon glyphicon-shopping-cart" title="Purchase Order"></span>
 						</a>
 					</td>
 				</tr>

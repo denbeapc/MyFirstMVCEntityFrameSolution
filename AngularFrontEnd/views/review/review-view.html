@@ -1,7 +1,6 @@
-<div>
+<div ng-if="ctrl.ReviewerRights">
 	<div>
-		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
-		<a href="#/purchaserequests/add">Create New</a> - 
+		<span id="PageTitle">Review <span ng-bind="ctrl.PageTitle"></span>s</span><br />
 		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
 	</div>
 	<div>
@@ -12,6 +11,7 @@
 					<th>Description</th>
 					<th>Justification</th>
 					<th>Date Needed</th>
+					<th>Date Submitted</th>
 					<th>Delivery Mode</th>
 					<th>Status</th>
 					<th>Total</th>
@@ -19,7 +19,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="purchaseRequest in ctrl.PurchaseRequests | filter: ctrl.SearchCriteria">
+				<tr ng-repeat="purchaseRequest in ctrl.PurchaseRequestsToBeReviewed | filter: ctrl.SearchCriteria">
 					<td>
 						<span ng-bind="purchaseRequest.User.FirstName"></span>
 						<span ng-bind="purchaseRequest.User.LastName"></span>
@@ -27,22 +27,23 @@
 					<td><span ng-bind="purchaseRequest.Description"></span></td>
 					<td><span ng-bind="purchaseRequest.Justification"></span></td>
 					<td><span ng-bind="purchaseRequest.DateNeeded"></span></td>
+					<td><span ng-bind="purchaseRequest.SubmittedDate"></span></td>
 					<td><span ng-bind="purchaseRequest.DeliveryMode"></span></td>
 					<td><span ng-bind="purchaseRequest.Status"></span></td>
 					<td>$<span ng-bind="purchaseRequest.Total"></span></td>
 					<td>
-						<a class="GlyphLink" title="Edit" href="#/purchaserequests/edit/{{purchaseRequest.ID}}">
-							<span class="glyphicon glyphicon-pencil"></span>&nbsp;
-						</a>
-						<a class="GlyphLink" title="Details" href="#/purchaserequests/detail/{{purchaseRequest.ID}}">
-							<span class="glyphicon glyphicon-list-alt"></span>&nbsp;
-						</a>
-						<a class="GlyphLink" title="Lines" href="#/purchaserequestlineitems/{{purchaseRequest.ID}}">
-							<span class="glyphicon glyphicon-th-list"></span>
+						<a class="GlyphLink" href="#/review/{{purchaseRequest.ID}}">
+							<button class="btn btn-warning">Review</button>
 						</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+</div>
+
+<div ng-if="!ctrl.ReviewerRights" class="alert alert-danger" role="alert">
+	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	<span class="sr-only">Error:</span>
+	You must be a verified reviewer to access this domain!
 </div>

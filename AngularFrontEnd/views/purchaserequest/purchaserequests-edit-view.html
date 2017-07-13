@@ -1,4 +1,4 @@
-<div style="width: 45%;" ng-hide="!ctrl.UserAccessRights">
+<div style="width: 45%;" ng-hide="!ctrl.UserAccessRights" ng-if="!ctrl.StatusNotEditable">
 	<div>
 		<span id="PageTitle">Edit <span ng-bind="ctrl.PageTitle"></span></span>
 	</div>
@@ -63,12 +63,21 @@
 		<label for="purchaserequest-status" class="col-md-3 control-label" style="text-align: right;">Status</label>
 
 		<div class="col-md-9">
-			<input class="form-control" type="text"
-			ng-model="ctrl.SelectedPurchaseRequest.Status" id="purchaserequest-status">
+			<!-- <input class="form-control" type="text" ng-disabled="!ctrl.AdminRights" 
+			ng-model="ctrl.SelectedPurchaseRequest.Status" id="purchaserequest-status"> -->
+			<select class="form-control" ng-model="ctrl.SelectedPurchaseRequest.Status" id="purchaserequest-status"
+			ng-options="status for status in ctrl.PrStatus" ng-disabled="!ctrl.AdminRights">
+			</select>
 		</div>
 	</div>
 
 	<div class="col-md-offset-3">
-		<button class="btn" ng-click="ctrl.Update(ctrl.SelectedPurchaseRequest)">Save</button>
+		<button class="btn" ng-click="ctrl.Update(ctrl.SelectedPurchaseRequest, true)">Save</button>
 	</div>
+</div>
+
+<div ng-if="ctrl.StatusNotEditable" class="alert alert-danger" role="alert">
+	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	<span class="sr-only">Error:</span>
+	The purchase request is either under review or has been approved, and cannot be edited!
 </div>

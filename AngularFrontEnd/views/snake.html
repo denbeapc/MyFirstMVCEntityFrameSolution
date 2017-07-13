@@ -1,0 +1,11 @@
+<div style="width: 400px; margin: auto; text-align: center;" ng-if="ctrl.SnakeAccess">
+	<label id="score"></label>
+	<canvas id="gc" width="400" height="400" ng-init="ctrl.onload()"></canvas>
+	<span>WASD for movement</span>
+</div>
+
+<div ng-if="!ctrl.SnakeAccess" class="alert alert-danger" role="alert">
+	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	<span class="sr-only">Error:</span>
+	Unknown domain
+</div>

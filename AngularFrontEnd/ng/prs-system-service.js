@@ -1,9 +1,9 @@
 angular.module("PrsApp")
 	.service("SystemSvc", SystemSvc);
 
-SystemSvc.$inject = ["$http", "$filter", "$location"];
+SystemSvc.$inject = ["$http", "$filter", "$location", "$route"];
 
-function SystemSvc($http, $filter, $location) {
+function SystemSvc($http, $filter, $location, $route) {
 	var self = this;
 	self.about = "System Service";
 
@@ -17,7 +17,28 @@ function SystemSvc($http, $filter, $location) {
 	self.VerifyUserLogin = function() {
 		if(self.ActiveUser == undefined) {
 			$location.path("/login");
+			makeActive(8);
 		}
+	}
+
+	self.CheckIfUserLoggedIn = function() {
+		if(self.ActiveUser != undefined) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	self.GetReviewerAccess = function() {
+		if(self.ActiveUser != undefined) {
+			if(self.ActiveUser.IsReviewer) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		return false;
 	}
 
 	self.GetPurchaseRequestAccess = function(id) {

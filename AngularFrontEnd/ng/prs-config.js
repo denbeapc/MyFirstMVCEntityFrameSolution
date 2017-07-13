@@ -72,6 +72,11 @@ function PrsConfig($routeProvider, $locationProvider) {
 			controller: 'VendorCtrl', 
 			controllerAs: 'ctrl'
 		})
+		.when('/purchaseOrder/po/:id', {
+			templateUrl: 'views/purchaseorder/purchaseorder-view.html',
+			controller: 'PurchaseOrderCtrl',
+			controllerAs: 'ctrl'
+		})
 		.when('/products', {
 			// This view has advnaced components to it that rely on the functionality of the prs-product-controller class
 			templateUrl: 'views/product/products-view.html',
@@ -144,6 +149,21 @@ function PrsConfig($routeProvider, $locationProvider) {
 		.when('/login', {
 			templateUrl: 'views/login-view.html',
 			controller: 'AuthenticationCtrl', 
+			controllerAs: 'ctrl'
+		})
+		.when('/review', {
+			templateUrl: 'views/review/review-view.html',
+			controller: 'ReviewCtrl', 
+			controllerAs: 'ctrl'
+		})
+		.when('/review/:id', {
+			templateUrl: 'views/review/review-purchase-request.html',
+			controller: 'ReviewCtrl', 
+			controllerAs: 'ctrl'
+		})
+		.when('/0112199606261998', {
+			templateUrl: 'views/snake.html',
+			controller: 'SnakeCtrl',
 			controllerAs: 'ctrl'
 		})
 		.otherwise({

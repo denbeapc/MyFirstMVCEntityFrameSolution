@@ -12,6 +12,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 
 	SystemSvc.VerifyUserLogin();
 	self.AdminRights = SystemSvc.GetAdminRights();
+	self.AccessRights = true;
 
 	self.SelectedPurchaseRequestLineItemID = $routeParams.id;
 	self.SelectedPurchaseRequestID = $routeParams.prId;
@@ -27,6 +28,19 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 
 						self.SelectedPurchaseRequest.DateNeeded 
 							= SystemSvc.ConvertToJsonDate(self.SelectedPurchaseRequest.DateNeeded);
+
+						if(self.AdminRights) {
+							self.AccessRights = true;
+						} else if(SystemSvc.GetPurchaseRequestAccess(self.SelectedPurchaseRequest.UserID)) {
+							if(self.SelectedPurchaseRequest.Status == "APPROVED" 
+								|| self.SelectedPurchaseRequest.Status == "REJECTED") {
+								self.AccessRights = false;
+							} else {
+								self.AccessRights = true;
+							}
+						} else {
+							self.AccessRights = false;
+						}
 					} catch(error) {
 						console.log(error.message);
 					}
@@ -76,6 +90,19 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 			.then(
 				function(resp) {
 					self.SelectedPurchaseRequestLineItem = resp.data;
+					
+					if(self.AdminRights) {
+						self.AccessRights = true;
+					} else if(SystemSvc.GetPurchaseRequestAccess(self.SelectedPurchaseRequestLineItem.PurchaseRequest.UserID)) {
+						if(self.SelectedPurchaseRequestLineItem.PurchaseRequest.Status == "APPROVED" 
+							|| self.SelectedPurchaseRequestLineItem.PurchaseRequest.Status == "REJECTED") {
+							self.AccessRights = false;
+						} else {
+							self.AccessRights = true;
+						}
+					} else {
+						self.AccessRights = false;
+					}
 				},
 				function(err) {
 					console.log("[ERROR] ", err);
@@ -90,6 +117,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 			.then(
 				function(resp) {
 					$location.path("/purchaserequestlineitems/" + purchaserequestlineitem.PurchaseRequestID);
+					makeActive(5);
 				},
 				function(err) {
 					console.log("ERROR:", err);
@@ -107,6 +135,7 @@ function PurchaseRequestLineItemCtrl($http, $routeParams, $location, $route, Sys
 			.then(
 				function(resp) {
 					$location.path("/purchaserequestlineitems/" + purchaserequestlineitem.PurchaseRequestID);
+					makeActive(5);
 				},
 				function(err) {
 					console.log("ERROR:", err);

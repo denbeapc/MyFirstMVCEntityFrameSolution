@@ -1,10 +1,12 @@
 angular
 	.module("PrsApp")
-	.controller("PurchaseRequestCtrl", PurchaseRequestCtrl);
+	.controller("ReviewCtrl", ReviewCtrl);
 
-PurchaseRequestCtrl.$inject = ["$http", "$routeParams", "$location", "PurchaseRequestSvc", "UserSvc", "SystemSvc"];
+ReviewCtrl.$inject = ["$http", "$routeParams", "$location", "PurchaseRequestSvc", 
+						"UserSvc", "SystemSvc", "PurchaseRequestLineItemSvc"];
 
-function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc, UserSvc, SystemSvc) {
+function ReviewCtrl($http, $routeParams, $location, PurchaseRequestSvc, 
+						UserSvc, SystemSvc, PurchaseRequestLineItemSvc) {
 	var self = this;
 	self.PrStatus = {
 		New : "NEW",
@@ -55,7 +57,13 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 
 	// JQuery function that retrieves a data list of type PurchaseRequests from the database
 	self.GetPurchaseRequestsReadyForReview = function() {
-		PurchaseRequestSvc.ReviewList()
+		var uId;
+		if(!self.ReviewerRights || SystemSvc.GetActiveUser() == undefined) {
+			uId = null;
+		} else {
+			uId = SystemSvc.GetActiveUser().ID;
+		}
+		PurchaseRequestSvc.ReviewList(uId)
 			.then(
 				function(resp) {
 					try {
@@ -91,10 +99,6 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 					try {
 						self.SelectedPurchaseRequest = resp.data;
 
-						self.StatusNotEditable = ((self.SelectedPurchaseRequest.Status == "REVIEW" 
-						|| self.SelectedPurchaseRequest.Status == "APPROVED") && !self.AdminRights) ?
-							true : false;
-
 						self.SelectedPurchaseRequest.DateNeeded 
 							= SystemSvc.ConvertToJsonDate(self.SelectedPurchaseRequest.DateNeeded);
 						self.SelectedPurchaseRequest.SubmittedDate 
@@ -114,55 +118,44 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 	}
 	self.GetPurchaseRequest(self.SelectedPurchaseRequestID)
 
-	self.ReviewPurchaseRequest = function() {
-		self.SelectedPurchaseRequest.Status = self.PrStatus.Review;
-		self.Update(self.SelectedPurchaseRequest, false);
-	}
+	// self.ReviewPurchaseRequest = function() {
+	// 	self.SelectedPurchaseRequest.Status = self.PrStatus.Review;
+	// 	self.Update(self.SelectedPurchaseRequest);
+	// }
 
 	self.DeliveryOptions = [ "USPS", "FedEx", "UPS", "DHL Express" ];
 
-	// JQuery function that updates a specific purchase request from the database given an ID
-	self.Update = function(purchaserequest, edited) {
-		if(self.AdminRights) {
-		} else {
-			purchaserequest.Status = (edited) ? self.PrStatus.New : self.PrStatus.Review;
-		}
-		PurchaseRequestSvc.Change(purchaserequest)
+	// JQuery function that retrieves a data list of type PurchaseRequests from the database
+	self.GetPurchaseRequestLineItems = function(prId) {
+		var action = (prId == undefined) ? "List" : "ListByPurchaseRequest/" + prId.toString();
+		PurchaseRequestLineItemSvc.List(action)
 			.then(
 				function(resp) {
-					$location.path("/purchaserequests");
+					self.PurchaseRequestLineItems = resp.data;
 				},
 				function(err) {
-					console.log("ERROR:", err);
+					self.PurchaseRequestLineItems = [];
+					console.log("[ERROR] ", err);
 				}
 			);
 	}
+	self.GetPurchaseRequestLineItems(self.SelectedPurchaseRequestID);
 
-	if(SystemSvc.GetActiveUser() != undefined) {
-		self.NewPurchaseRequest = {
-			UserID: (SystemSvc.GetActiveUser()).ID,
-			Status: self.PrStatus.New,
-			DateNeeded: SystemSvc.ConvertToJsonDate(new Date()),
-			SubmittedDate: SystemSvc.ConvertToJsonDate(new Date()),
-			DocsAttached: false,
-			Total: 0.00,
-			DeliveryMode: 'USPS'
-		};
-	}
-	
-
-	// JQuery function that adds a new purchase request to the database
-	self.Add = function(purchaserequest) {
-		PurchaseRequestSvc.Add(purchaserequest)
+	// JQuery function that retrieves a specific purchase request from the database given an ID
+	self.GetPurchaseRequestLineItem = function(id) {
+		if(id == undefined)
+			return;
+		PurchaseRequestLineItemSvc.Get(id)
 			.then(
 				function(resp) {
-					$location.path("/purchaserequests");
+					self.SelectedPurchaseRequestLineItem = resp.data;
 				},
 				function(err) {
-					console.log("ERROR:", err);
+					console.log("[ERROR] ", err);
 				}
 			);
 	}
+	self.GetPurchaseRequestLineItem(self.SelectedPurchaseRequestLineItemID);
 
 	self.GetUsers = function() {
 		UserSvc.List()
@@ -178,12 +171,21 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 	}
 	self.GetUsers();
 
-	// JQuery function that deletes a specific purchase request from the database given an ID
-	self.Delete = function(id) {
-		PurchaseRequestSvc.Remove(id)
+	self.Approve = function() {
+		self.SelectedPurchaseRequest.Status = self.PrStatus.Approved;
+		self.Update(self.SelectedPurchaseRequest);
+	}
+
+	self.Reject = function() {
+		self.SelectedPurchaseRequest.Status = self.PrStatus.Rejected;
+		self.Update(self.SelectedPurchaseRequest);
+	}
+
+	self.Update = function(purchaserequest) {
+		PurchaseRequestSvc.Change(purchaserequest)
 			.then(
 				function(resp) {
-					$location.path("/purchaserequests");
+					$location.path("/review");
 				},
 				function(err) {
 					console.log("ERROR:", err);

@@ -1,24 +1,29 @@
-<div>
+<div ng-if="!ctrl.SnakeBool">
 	<div>
 		<span id="PageTitle"><span ng-bind="ctrl.PageTitle"></span> List</span><br />
 		<span ng-if="ctrl.AdminRights"><a href="#/users/add">Create New</a> - </span>
 		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
-		<span ng-if="ctrl.AdminRights">
-			 - <button ng-click="ctrl.ToggleDisplayPassword()">Toggle Display Passwords</button>
-		</span>
+		
 	</div>
 	<div>
 		<table class="table">
 			<thead>
 				<tr>
-					<td>Username</td>
-					<td>Password</td>
-					<td>Name</td>
-					<td>Phone</td>
-					<td>Email</td>
-					<td>Is Reviewer?</td>
-					<td>Is Admin?</td>
-					<td></td>
+					<th>Username</th>
+					<th>Password
+						<span id="RevealPasswordBtn" ng-if="ctrl.AdminRights">
+							<span ng-if="!ctrl.DisplayPassword" ng-click="ctrl.ToggleDisplayPassword()" 
+							class="glyphicon glyphicon-eye-close"></span>
+							<span ng-if="ctrl.DisplayPassword" ng-click="ctrl.ToggleDisplayPassword()" 
+							class="glyphicon glyphicon-eye-open"></span>
+						</span>
+					</th>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Is Reviewer?</th>
+					<th>Is Admin?</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>

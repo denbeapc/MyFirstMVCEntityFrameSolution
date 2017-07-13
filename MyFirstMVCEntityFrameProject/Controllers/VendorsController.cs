@@ -11,9 +11,54 @@ using Api = System.Web.Http;
 
 namespace MyFirstMVCEntityFrameProject.Controllers
 {
+    class POLine {
+        public string Name;
+        public decimal Price;
+        public int Quantity;
+        public decimal LineTotal;
+    }
+
     public class VendorsController : Controller
     {
         private MyFirstMVCEntityFrameProjectContext db = new MyFirstMVCEntityFrameProjectContext();
+
+        // -------------- IMPORTANT -------------- //
+        // 
+        public ActionResult CreatePurchaseOrder(int? id) {
+            var purchaseOrder = db.PurchaseRequestLineItems.Where(li => li.Product.VendorID == id).ToList();
+
+            decimal Subtotal = 0; decimal Tax = 0; decimal Shipping = 0; decimal Total = 0;
+            List<string> names = new List<string>();
+            List<decimal> prices = new List<decimal>();
+            List<int> quantities = new List<int>();
+            for (int idx = 0; idx < purchaseOrder.Count; idx++) {
+                if (!names.Contains(purchaseOrder[idx].Product.Name)) {
+                    names.Add(purchaseOrder[idx].Product.Name);
+                    quantities.Add(purchaseOrder[idx].Quantity);
+                    prices.Add(purchaseOrder[idx].Product.Price * (decimal)0.7);
+                } else {
+                    quantities[names.IndexOf(purchaseOrder[idx].Product.Name)] += purchaseOrder[idx].Quantity;
+                }
+            }
+
+            decimal[] linetotals = new decimal[names.Count];
+            List<object> poLines = new List<object>(names.Count);
+            for (int idx = 0; idx < prices.Count; idx++) {
+                linetotals[idx] = prices[idx] * quantities[idx];
+                poLines.Add(new POLine { Name = names[idx],
+                                            Price = prices[idx],
+                                            Quantity = quantities[idx],
+                                            LineTotal = linetotals[idx] });
+                Subtotal += linetotals[idx];
+            }
+
+            Tax = Subtotal * (decimal)0.1;
+            Shipping = Subtotal * (decimal)0.05;
+            Total = Tax + Shipping + Subtotal;
+            var poCosts = new { Subtotal, Tax, Shipping, Total };
+
+            return Json(new { poLines, poCosts }, JsonRequestBehavior.AllowGet);
+        }
 
         // -------------- IMPORTANT -------------- //
         // RETURNS a list of the Vendors to the front end (JQuery) in Json formatting
