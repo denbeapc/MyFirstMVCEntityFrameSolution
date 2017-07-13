@@ -17,7 +17,5 @@ namespace MyFirstMVCEntityFrameProject.Models {
         [Range(0, 1000)]
         [DefaultValue(1)]
         public int Quantity { get; set; }
-        
-        public decimal LineTotal => Quantity * (Product.Price * Convert.ToDecimal(0.7));
     }
 }

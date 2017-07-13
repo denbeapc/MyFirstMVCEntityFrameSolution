@@ -26,9 +26,8 @@ function PurchaseOrderCtrl($routeParams, $location, SystemSvc, PurchaseRequestLi
 		VendorSvc.CreatePurchaseOrder(id).then(
 				function(resp) {
 					var purchaseRequestLineItemsForVendor = resp.data.purchaseOrder;
-					// self.PO.LineItems = resp.data.poLines; TODO Migrate the rest of Accumulate... to Server side
+					self.PO.LineItems = resp.data.poLines;
 					self.PO.Cost = resp.data.poCosts;
-					AccumulateProductQuantityAmounts(purchaseRequestLineItemsForVendor);
 				},
 				function(err) {
 					console.error(err);
@@ -36,35 +35,4 @@ function PurchaseOrderCtrl($routeParams, $location, SystemSvc, PurchaseRequestLi
 			);
 	};
 	self.CreatePoForVendor(self.SelectedVendorId);
-
-	var AccumulateProductQuantityAmounts = function(purchaseRequestLineItems) {
-		var tempPrLines = {}
-		for(var idx in purchaseRequestLineItems) {
-			var productId = purchaseRequestLineItems[idx].ProductID;
-			var productName = purchaseRequestLineItems[idx].Product.Name;
-			var quantity = purchaseRequestLineItems[idx].Quantity;
-			if(typeof tempPrLines[productName] === 'undefined') {
-				tempPrLines[productName] = {};
-				tempPrLines[productName]['Quantity'] = quantity;
-				tempPrLines[productName]['PurchaseRequestLineItem'] = purchaseRequestLineItems[idx];
-			} else {
-				tempPrLines[productName]['Quantity'] += quantity;
-			}
-		}
-
-		// normalize the purchase request line item object
-		self.PO.LineItems = [];
-		var keys = Object.keys(tempPrLines);
-		for(var key of keys) {
-			var prln = tempPrLines[key];
-			var poLine = {
-				Product: prln.PurchaseRequestLineItem.Product.Name,
-				Quantity: prln.Quantity,
-				Price: prln.PurchaseRequestLineItem.Product.Price * .7,
-				LineTotal: prln.Quantity * prln.PurchaseRequestLineItem.Product.Price * .7
-			};
-			self.PO.LineItems.push(poLine);
-		}
-	}
-
 };

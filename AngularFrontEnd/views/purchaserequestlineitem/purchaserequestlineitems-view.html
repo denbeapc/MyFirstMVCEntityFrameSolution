@@ -1,7 +1,7 @@
-<div ng-if="ctrl.AccessRights">
+<div>
 	<div>
 		<span id="PageTitle">List of Purchase Request <span ng-bind="ctrl.PageTitle"></span></span><br />
-		<span>
+		<span ng-if="ctrl.AccessRights">
 			<a href="#/purchaserequestlineitems/add/{{ctrl.SelectedPurchaseRequest.ID}}">Add New Line Item</a> - 
 		</span>
 		<label>Search: <input ng-model="ctrl.SearchCriteria"></label>
@@ -34,21 +34,17 @@
 					<td><span ng-bind="lineItem.Product.Name"></span></td>
 					<td><span ng-bind="lineItem.Quantity"></span></td>
 					<td>
-						<span>
+						<span ng-if="ctrl.AccessRights">
 							<button class="btn btn-danger" ng-click="ctrl.Delete(lineItem.ID)">Delete</button> | 
 						</span>
-						<a href="#/purchaserequestlineitems/edit/{{lineItem.ID}}">
-							<button class="btn btn-info">Edit</button>
-						</a>
+						<span ng-if="ctrl.AccessRights">
+							<a href="#/purchaserequestlineitems/edit/{{lineItem.ID}}">
+								<button class="btn btn-info">Edit</button>
+							</a>
+						</span>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-</div>
-
-<div ng-if="!ctrl.AccessRights" class="alert alert-danger" role="alert">
-	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-	<span class="sr-only">Error:</span>
-	You do not have access to this purchase request!
 </div>

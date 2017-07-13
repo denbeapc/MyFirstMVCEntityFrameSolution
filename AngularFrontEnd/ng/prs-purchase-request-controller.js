@@ -123,7 +123,10 @@ function PurchaseRequestCtrl($http, $routeParams, $location, PurchaseRequestSvc,
 
 	// JQuery function that updates a specific purchase request from the database given an ID
 	self.Update = function(purchaserequest, edited) {
-		purchaserequest.Status = (edited) ? self.PrStatus.New : self.PrStatus.Review;
+		if(self.AdminRights) {
+		} else {
+			purchaserequest.Status = (edited) ? self.PrStatus.New : self.PrStatus.Review;
+		}
 		PurchaseRequestSvc.Change(purchaserequest)
 			.then(
 				function(resp) {

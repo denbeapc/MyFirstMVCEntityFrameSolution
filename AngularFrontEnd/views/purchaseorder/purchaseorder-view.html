@@ -32,7 +32,7 @@
 		</thead>
 		<tbody>
 			<tr class='' ng-repeat='poLine in ctrl.PO.LineItems'>
-				<td><span ng-bind='poLine.Product'></span></td>
+				<td><span ng-bind='poLine.Name'></span></td>
 				<td class='text-center'><span ng-bind='poLine.Quantity'></span></td>
 				<td class='text-right'><span ng-bind='poLine.Price | currency'></span></td>
 				<td class='text-right'><span ng-bind='poLine.LineTotal | currency'></span></td>

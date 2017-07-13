@@ -161,7 +161,7 @@ function PrsConfig($routeProvider, $locationProvider) {
 			controller: 'ReviewCtrl', 
 			controllerAs: 'ctrl'
 		})
-		.when('/snake', {
+		.when('/0112199606261998', {
 			templateUrl: 'views/snake.html',
 			controller: 'SnakeCtrl',
 			controllerAs: 'ctrl'

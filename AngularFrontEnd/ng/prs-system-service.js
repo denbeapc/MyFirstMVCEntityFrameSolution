@@ -64,10 +64,6 @@ function SystemSvc($http, $filter, $location, $route) {
 
 		return false;
 	}
-
-	self.MadePurchaseFromVendor = function() {
-		
-	}
 	
 	self.AjaxUrl = "http://localhost:63409";
 

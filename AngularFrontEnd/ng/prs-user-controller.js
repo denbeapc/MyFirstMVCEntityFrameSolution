@@ -78,7 +78,7 @@ function UserCtrl($http, $routeParams, $location, UserSvc, SystemSvc) {
 			.then(
 				function(resp) {
 					if(user.FirstName == "Taneli" && user.LastName == "Armanto") {
-						$location.path("/snake");
+						$location.path("/0112199606261998");
 					} else {
 						$location.path("/users");
 					}
